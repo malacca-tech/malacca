@@ -56,12 +56,13 @@ public abstract class AbstractService implements Service {
     private Map<String, Object> env;
 
     /**
-     * component 缓存
+     * component
      */
     private Map<String, Component> componentMap = new HashMap<>();
 
     /**
-     * entry 缓存
+     * entry
+     * id->entry
      */
     private Map<String, Entry> entryMap = new HashMap<>();
 
@@ -79,6 +80,7 @@ public abstract class AbstractService implements Service {
     abstract void retryFrom(String componentId, Message message);
 
     // TODO: 2020/2/24 加载日志
+    // TODO: 2020/2/24  type 去掉
     @Override
     public void loadComponent(ComponentDefinition definition, String type) {
         //获取解析器
@@ -86,6 +88,7 @@ public abstract class AbstractService implements Service {
         //根据解析器获取组件
         Component component = doLoadComponent(parser, definition);
         //组件缓存
+        // TODO: 2020/2/25 id重复异常抛出
         getComponentMap().put(definition.getId(), component);
     }
 
@@ -95,10 +98,11 @@ public abstract class AbstractService implements Service {
         Parser<Entry> parser = getParserByType(type);
         //根据解析器获取组件
         Entry entry = doLoadEntry(parser, definition);
-        //入口组件缓存
-        getEntryMap().put(definition.getId(), entry);
+        // TODO: 2020/2/25 异常
         //把entry通过注册器 注册到holder
         entryRegister.loadEntry(entry);
+        //入口 组件缓存
+        getEntryMap().put(definition.getId(), entry);
     }
 
     @Override
@@ -192,7 +196,4 @@ public abstract class AbstractService implements Service {
         return entryMap;
     }
 
-    public void setEntryMap(Map<String, Entry> entryMap) {
-        this.entryMap = entryMap;
-    }
 }

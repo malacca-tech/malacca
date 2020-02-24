@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class HttpInputParser extends AbstractParser<HttpEntry> {
     public HttpInputParser() {
-        super("org.malacca.entry.HttpEntry");
+        super(HttpEntry.class.getName());
     }
 
     @Override

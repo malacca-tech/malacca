@@ -1,0 +1,17 @@
+@startuml
+ServiceProvider -> ServiceManager: loadService(String yaml)
+ServiceManager -> ServiceManager: partYamlToDefinition()
+ServiceManager -> ServiceManager: buildService(serviceDefinition)
+ServiceManager -> Service:setEntryRegister(register)
+ServiceManager -> Service: loadEntry(entryDefinition)
+Service -> Service:getParser(definition)
+Service -> Parser: createEntryInstance()
+Service -> Service: putEntryMap(entry)
+Service -> EntryRegister:loadEntry(Entry)
+EntryRegister -> EntryHolder:registerEntry(id,entry)
+ServiceManager -> Service: loadComponent(componentDefinition)
+Service -> Parser:createComponentInstance()
+Service -> Service: putComponentEntry()
+ServiceManager -> Service:loadFlow(flowStr)
+Entry ->
+@enduml
