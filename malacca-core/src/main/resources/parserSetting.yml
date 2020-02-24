@@ -1,0 +1,2 @@
+httpInput: org.malacca.support.parser.HttpInputParser
+httpOutput: org.malacca.support.parser.HttpOutputParser
