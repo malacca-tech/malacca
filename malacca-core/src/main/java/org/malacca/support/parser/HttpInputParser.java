@@ -22,6 +22,7 @@ public class HttpInputParser implements EntryParser {
         // todo 按照下面的规则和方式把其它的补全
         setPath(entry, params.get(URI_KEY));
         setMethod(entry, params.get(METHOD_KEY));
+        entry.setEntryKey();
         return entry;
     }
 

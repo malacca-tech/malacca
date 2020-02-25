@@ -35,4 +35,6 @@ public interface Entry {
     String getEntryKey();
 
     String getType();
+
+    String getId();
 }

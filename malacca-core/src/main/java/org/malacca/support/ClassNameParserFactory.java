@@ -6,6 +6,7 @@ import org.malacca.component.output.HttpOutComponent;
 import org.malacca.entry.Entry;
 import org.malacca.entry.HttpEntry;
 import org.malacca.support.parser.HttpInputParser;
+import org.malacca.support.parser.HttpOutputParser;
 import org.malacca.support.parser.Parser;
 
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class ClassNameParserFactory implements ParserFactory {
         componentTypeAlias = new HashMap<>();
         //tood 这里只是一个demo，后期需要从classpath的META-INF的配置文件里面获取这个映射关系
         entryTypeAlias.put("http", HttpInputParser.class.getName());
-        componentTypeAlias.put("http", HttpOutComponent.class.getName());
+        componentTypeAlias.put("http", HttpOutputParser.class.getName());
     }
 
     /**

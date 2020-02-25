@@ -1,0 +1,8 @@
+@startuml
+EventContextStarter -> EventContext: 初始化监听器 addListener(listener)
+ServiceManger -> EventContext: 发布事件 dispatchEvent
+EventContext --> ServiceManger: 直接返回 不关心结果
+EventContext -> EventListener: 各个监听器 监听事件 onEvent(event)
+EventListener -> EventListener: 放入队列 inQueue(event)
+EventListener -> EventListener: 开线程 处理 事件 process(event)
+@enduml

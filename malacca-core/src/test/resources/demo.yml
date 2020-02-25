@@ -13,7 +13,7 @@ description:
 # 入口
 entries:
   # 内部组件  默认 type  企业版组件 另外种格式区分 eg: org.malacca.http
-  - type: httpInput
+  - type: http
     # 组件id  用于流程 控制
     id: component1
     # 入口 展示名称
@@ -30,7 +30,7 @@ entries:
       # key value 形式 塞到commponent
       key1: value1
       key2: value3
-  - type: httpInput
+  - type: http
     # 组件id  用于流程 控制
     id: component2
     # 入口 展示名称
@@ -44,7 +44,7 @@ entries:
 # 组件 包括 中间的数据业务组件 以及 输出组件
 components:
   # webservice
-  - type: httpOutput
+  - type: http
     # 组件id
     id: soapOut1
     #组件name

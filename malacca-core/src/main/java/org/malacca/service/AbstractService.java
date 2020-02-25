@@ -89,12 +89,12 @@ public abstract class AbstractService implements Service {
 
     @Override
     public void addEntry(Entry entry) {
-        getEntryMap().put(entry.getType(), entry);
+        getEntryMap().put(entry.getId(), entry);
     }
 
     @Override
     public void addComponent(Component component) {
-        getComponentMap().put(component.getId(),component);
+        getComponentMap().put(component.getId(), component);
     }
 
     public String getServiceId() {

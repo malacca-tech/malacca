@@ -37,7 +37,10 @@ class ServiceDemo extends Specification {
             }
         })
         serviceManager.setEntryRegister(entryRegister)
-        serviceManager.getParserFactory().
         serviceManager.loadService(serviceYml)
+        println("服务加载成功")
+        println("开始测试卸载")
+        serviceManager.unloadService("A001")
+        println("卸载成功")
     }
 }

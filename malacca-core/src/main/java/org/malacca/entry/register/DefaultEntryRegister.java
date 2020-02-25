@@ -21,14 +21,12 @@ public class DefaultEntryRegister extends AbstractEntryRegister {
 
     public DefaultEntryRegister() {
         super();
+        initHolder();
     }
 
-    protected void initHolder(){
-        super.putHolder("http", new HttpEntryHolder() {
-            @Override
-            public void unloadEntry(String id, Entry entry) {
-
-            }
-        });
+    // TODO: 2020/2/25 在初始化的时候就一应该初始化holder
+    protected void initHolder() {
+        super.putHolder("httpEntry", new HttpEntryHolder());
     }
+
 }

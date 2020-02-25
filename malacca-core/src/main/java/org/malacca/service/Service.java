@@ -30,14 +30,18 @@ public interface Service {
      */
     void setServiceId(String serviceId);
 
+    String getServiceId();
+
     /**
      * 加入入口
+     *
      * @param entry
      */
     void addEntry(Entry entry);
 
     /**
      * 添加组件
+     *
      * @param component
      */
     void addComponent(Component component);
@@ -53,9 +57,16 @@ public interface Service {
     void loadFlow(String flowStr);
 
     /**
-     * 获取entry缓存
+     * 获取entry列表
      *
      * @return
      */
     Map<String, Entry> getEntryMap();
+
+    /**
+     * 获取组件列表
+     *
+     * @return
+     */
+    Map<String, Component> getComponentMap();
 }

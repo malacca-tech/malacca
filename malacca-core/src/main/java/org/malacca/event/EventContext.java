@@ -22,10 +22,18 @@ public class EventContext {
 
     private static List<EventListener> list = new ArrayList<EventListener>();
 
+    /**
+     * 添加 监听器
+     * @param listener
+     */
     public static void addListener(EventListener listener) {
         list.add(listener);
     }
 
+    /**
+     * 移除监听器
+     * @param listener
+     */
     public static void removeListener(EventListener listener) {
         list.remove(listener);
     }

@@ -106,6 +106,8 @@ public abstract class AbstractServiceManager implements ServiceManager {
             }
             //todo 同理，应该是有一个默认的string -> flow 的parser？flowBuilder
             service.loadFlow(serviceDefinition.getFlow());
+
+            getServiceMap().put(service.getServiceId(), service);
         }
     }
 

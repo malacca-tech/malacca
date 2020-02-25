@@ -1,5 +1,6 @@
 package org.malacca.service;
 
+import org.malacca.entry.register.DefaultEntryRegister;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.messaging.Message;
 import org.malacca.support.ClassNameParserFactory;
@@ -23,9 +24,9 @@ import java.util.Map;
  */
 public class DefaultServiceManager extends AbstractServiceManager {
 
-    public DefaultServiceManager(){
+    public DefaultServiceManager() {
         //todo 这个entryRegister也是同理，弄一个default的entryRegister
-        super(null,new ClassNameParserFactory());
+        super(new DefaultEntryRegister(), new ClassNameParserFactory());
     }
 
     protected DefaultServiceManager(EntryRegister entryRegister, ParserFactory parserFactory) {
