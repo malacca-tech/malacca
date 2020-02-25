@@ -29,7 +29,7 @@ public abstract class AbstractEntryRegister implements EntryRegister {
     private Map<String, EntryHolder> holderMap = new HashMap<>();
 
     @Override
-    public void loadEntry(Entry entry) {
+    public void registerEntry(Entry entry) {
         EntryHolder entryHolder = holderMap.get(entry.getType());
         // TODO: 2020/2/24 日志
         if (entryHolder != null) {
@@ -38,13 +38,14 @@ public abstract class AbstractEntryRegister implements EntryRegister {
     }
 
     @Override
-    public void unloadEntry(Entry entry) {
+    public void deregisterEntry(Entry entry) {
         EntryHolder entryHolder = holderMap.get(entry.getType());
         // TODO: 2020/2/24 日志
         if (entryHolder != null) {
             entryHolder.unloadEntry(entry.getEntryKey(), entry);
         }
     }
+
 
     public Map<String, EntryHolder> getHolderMap() {
         return holderMap;

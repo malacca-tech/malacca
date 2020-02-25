@@ -18,7 +18,7 @@ public class HttpOutComponent extends AbstractComponent {
 
     private String url;
 
-    private String timeout;
+    private long timeout;
 
     @Override
     public Message handleMessage(Message<?> message) throws MessagingException {
@@ -39,11 +39,11 @@ public class HttpOutComponent extends AbstractComponent {
         this.url = url;
     }
 
-    public String getTimeout() {
+    public long getTimeout() {
         return timeout;
     }
 
-    public void setTimeout(String timeout) {
+    public void setTimeout(long timeout) {
         this.timeout = timeout;
     }
 }

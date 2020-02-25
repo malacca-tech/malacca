@@ -32,34 +32,45 @@ public class ClassNameParserFactory implements ParserFactory {
      */
     Map<String, String> entryTypeAlias;
 
-    Map<String,String> componentTypeAlias;
+    Map<String, String> componentTypeAlias;
+
+    public ClassNameParserFactory() {
+        initTypeAlias();
+    }
 
     @Override
-    public Parser getParser(String type,Class target) {
+    public Parser getParser(String type, Class target) {
 
-        if(target.isAssignableFrom(Entry.class)){
-            return getEntryParser(type);
-        }
-        if(target.isAssignableFrom(Component.class)){
-            return getComponentParser(type);
+        try {
+            if (target.isAssignableFrom(Entry.class)) {
+                return getEntryParser(type);
+            }
+            if (target.isAssignableFrom(Component.class)) {
+                return getComponentParser(type);
+            }
+        } catch (Exception e) {
+            //todo 这里如果实在没找到，是应该抛一个ParserNotFoundException,告诉用户你配的这个yaml有问题，你要的组件没有加载
+            e.printStackTrace();
         }
         //todo 根据反射创建实例，如果对于特殊的场景需要单例的，就把这个factory注册为spring的bean，不过讲道理肯定是要注册成bean的，方便设置到每个service里面
         //todo 这里如果实在没找到，是应该抛一个ParserNotFoundException,告诉用户你配的这个yaml有问题，你要的组件没有加载
         return null;
     }
 
-    private Parser getEntryParser(String type){
+    private Parser getEntryParser(String type) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         String className = entryTypeAlias.get(type);
         return createParserInstance(className);
     }
 
-    private Parser getComponentParser(String type){
+    private Parser getComponentParser(String type) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         String className = componentTypeAlias.get(type);
         return createParserInstance(className);
     }
 
-    private Parser createParserInstance(String className){
-        return null;
+    private Parser createParserInstance(String className) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        Class<?> parserClass = Class.forName(className);
+        Object instance = parserClass.newInstance();
+        return (Parser) instance;
     }
 
     protected void initTypeAlias() {
@@ -74,7 +85,7 @@ public class ClassNameParserFactory implements ParserFactory {
      * 当有新的插件加载的时候可能需要重新刷一下这个映射关系，现在是一个全局刷的
      * todo 可能需要一个指定添加alias的方法
      */
-    public void refreshTypeAlias(){
+    public void refreshTypeAlias() {
         initTypeAlias();
     }
 

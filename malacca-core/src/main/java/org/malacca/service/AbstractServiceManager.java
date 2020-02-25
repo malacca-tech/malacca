@@ -95,6 +95,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
                 Parser<Entry, EntryDefinition> parser = parserFactory.getParser(entryDefinition.getType(), Entry.class);
                 Entry entry = parser.createInstance(entryDefinition);
                 service.addEntry(entry);
+                entryRegister.registerEntry(entry);
             }
 
             List<ComponentDefinition> componentDefinitions = serviceDefinition.getComponents();
@@ -115,9 +116,10 @@ public abstract class AbstractServiceManager implements ServiceManager {
         if (service != null) {
             Map<String, Entry> entryMap = service.getEntryMap();
             for (Entry entry : entryMap.values()) {
-                service.unloadEntry(entry);
+                entryRegister.deregisterEntry(entry);
             }
         }
+        getServiceMap().remove(serviceId);
     }
 
     @Override
@@ -134,8 +136,6 @@ public abstract class AbstractServiceManager implements ServiceManager {
         defaultService.setDescription(definition.getDescription());
         defaultService.setVersion(definition.getVersion());
         defaultService.setEnv(definition.getEnv());
-        // TODO: 2020/2/24  应该是初始化的时候注入进去
-        defaultService.setEntryRegister(entryRegister);
         return defaultService;
     }
 
@@ -161,5 +161,13 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     public void setEntryRegister(EntryRegister entryRegister) {
         this.entryRegister = entryRegister;
+    }
+
+    public ParserFactory getParserFactory() {
+        return parserFactory;
+    }
+
+    public void setParserFactory(ParserFactory parserFactory) {
+        this.parserFactory = parserFactory;
     }
 }

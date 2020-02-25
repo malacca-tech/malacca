@@ -19,18 +19,18 @@ import org.malacca.messaging.Message;
 // TODO: 2020/2/24 lib 里面实现
 public class HttpEntry extends AbstractEntry {
 
-    private String path;
+    private String uri;
 
     private String method;
 
     private static final String TYPE = "httpEntry";
 
     public HttpEntry() {
-        super(TYPE,TYPE);
+        super(TYPE, TYPE);
     }
 
-    public HttpEntry(String id,String name){
-        super(id,name);
+    public HttpEntry(String id, String name) {
+        super(id, name);
     }
 
     @Override
@@ -44,12 +44,17 @@ public class HttpEntry extends AbstractEntry {
         return null;
     }
 
-    public String getPath() {
-        return path;
+    @Override
+    public void setEntryKey() {
+        super.entryKey = uri;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getMethod() {

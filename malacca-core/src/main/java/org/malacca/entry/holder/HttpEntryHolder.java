@@ -20,7 +20,7 @@ import java.util.Map;
  * Department :
  * </p>
  */
-public abstract class HttpEntryHolder implements EntryHolder<Entry> {
+public class HttpEntryHolder extends AbstractEntryHolder<Entry> {
     /**
      * http Entry缓存
      */
@@ -29,6 +29,11 @@ public abstract class HttpEntryHolder implements EntryHolder<Entry> {
     @Override
     public void loadEntry(String id, Entry entry) {
         getHttpEntryMap().put(id, entry);
+    }
+
+    @Override
+    public void unloadEntry(String id, Entry entry) {
+        getHttpEntryMap().remove(id, entry);
     }
 
     public Map<String, Entry> getHttpEntryMap() {

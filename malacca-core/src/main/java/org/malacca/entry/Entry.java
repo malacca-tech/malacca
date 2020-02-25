@@ -29,19 +29,10 @@ public interface Entry {
 
     /**
      * 用于区分每个entry的识别 eg: httpEntry -> entryKey= /path  pollerEntry -> entryKey = EntryId
-     *
-     * @param entryKey
      */
-    void setEntryKey(String entryKey);
+    void setEntryKey();
 
     String getEntryKey();
-
-//    /**
-//     * 组件类型
-//     *
-//     * @param type
-//     */
-//    void setType(String type);
 
     String getType();
 }

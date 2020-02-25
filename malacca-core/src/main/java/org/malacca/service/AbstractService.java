@@ -57,11 +57,6 @@ public abstract class AbstractService implements Service {
     private Map<String, Object> env;
 
     /**
-     *
-     */
-    private ParserFactory parserFactory;
-
-    /**
      * component
      */
     private Map<String, Component> componentMap = new HashMap<>();
@@ -77,8 +72,6 @@ public abstract class AbstractService implements Service {
      */
     private Flow flow;
 
-    private EntryRegister entryRegister;
-
     /**
      * 重发接口
      * componentId 组件id
@@ -87,7 +80,6 @@ public abstract class AbstractService implements Service {
 
     @Override
     public void unloadEntry(Entry entry) {
-        entryRegister.unloadEntry(entry);
     }
 
     @Override
@@ -174,6 +166,5 @@ public abstract class AbstractService implements Service {
     public Map<String, Entry> getEntryMap() {
         return entryMap;
     }
-
 
 }

@@ -23,7 +23,7 @@ public interface EntryRegister {
      *
      * @param entry 入口实例
      */
-    void loadEntry(Entry entry);
+    void registerEntry(Entry entry);
 
-    void unloadEntry(Entry entry);
+    void deregisterEntry(Entry entry);
 }

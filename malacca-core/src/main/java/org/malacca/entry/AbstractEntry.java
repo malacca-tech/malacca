@@ -21,7 +21,7 @@ public abstract class AbstractEntry implements Entry {
      */
     private Map<String, String> env;
 
-    private String entryKey;
+    protected String entryKey;
 
     protected AbstractEntry(String id,String name){
         this.id = id;
@@ -70,8 +70,4 @@ public abstract class AbstractEntry implements Entry {
         return entryKey;
     }
 
-    @Override
-    public void setEntryKey(String entryKey) {
-        this.entryKey = entryKey;
-    }
 }

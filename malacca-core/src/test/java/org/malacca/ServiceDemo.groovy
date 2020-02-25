@@ -37,6 +37,7 @@ class ServiceDemo extends Specification {
             }
         })
         serviceManager.setEntryRegister(entryRegister)
+        serviceManager.getParserFactory().
         serviceManager.loadService(serviceYml)
     }
 }
