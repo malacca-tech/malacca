@@ -6,13 +6,29 @@ import org.malacca.messaging.Message;
 
 public class HttpOutComponent extends AbstractComponent {
 
+    public static final String TYPE = "httpOut";
+
+    public HttpOutComponent() {
+        super(TYPE, TYPE);
+    }
+
+    public HttpOutComponent(String id, String name) {
+        super(id, name);
+    }
+
     private String url;
 
     private String timeout;
 
     @Override
     public Message handleMessage(Message<?> message) throws MessagingException {
+        // TODO: 2020/2/25 to impl
         return null;
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
     public String getUrl() {

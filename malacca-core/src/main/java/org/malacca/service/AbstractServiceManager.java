@@ -1,5 +1,6 @@
 package org.malacca.service;
 
+import org.malacca.component.Component;
 import org.malacca.definition.ComponentDefinition;
 import org.malacca.definition.EntryDefinition;
 import org.malacca.definition.ServiceDefinition;
@@ -7,6 +8,8 @@ import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.exception.ServiceLoadException;
 import org.malacca.messaging.Message;
+import org.malacca.support.ParserFactory;
+import org.malacca.support.parser.Parser;
 import org.malacca.utils.YmlParserUtils;
 
 import java.io.IOException;
@@ -46,6 +49,16 @@ public abstract class AbstractServiceManager implements ServiceManager {
      */
     private ThreadPoolExecutor threadExecutor;
 
+    /**
+     * 用于给Service获取翻译definition的工厂类
+     */
+    protected ParserFactory parserFactory;
+
+    protected AbstractServiceManager(EntryRegister entryRegister, ParserFactory parserFactory) {
+        this.entryRegister = entryRegister;
+        this.parserFactory = parserFactory;
+        this.serviceMap = new HashMap<>();
+    }
 
     /**
      * 提供重新发布功能
@@ -73,18 +86,24 @@ public abstract class AbstractServiceManager implements ServiceManager {
         }
 
         // TODO: 2020/2/21 线程问题
+        // TODO: 2020/2/25 这里会有很多需要对异常进捕获的地方 并且要派发加载失败的事件
         if (serviceDefinition != null) {
             Service service = buildServiceInstance(serviceDefinition);
-            service.setEntryRegister(entryRegister);
             //加载入口组件
             List<EntryDefinition> entryDefinitions = serviceDefinition.getEntries();
             for (EntryDefinition entryDefinition : entryDefinitions) {
-                service.loadEntry(entryDefinition, entryDefinition.getType());
+                Parser<Entry, EntryDefinition> parser = parserFactory.getParser(entryDefinition.getType(), Entry.class);
+                Entry entry = parser.createInstance(entryDefinition);
+                service.addEntry(entry);
             }
+
             List<ComponentDefinition> componentDefinitions = serviceDefinition.getComponents();
             for (ComponentDefinition componentDefinition : componentDefinitions) {
-                service.loadComponent(componentDefinition, componentDefinition.getType());
+                Parser<Component, ComponentDefinition> parser = parserFactory.getParser(componentDefinition.getType(), Component.class);
+                Component component = parser.createInstance(componentDefinition);
+                service.addComponent(component);
             }
+            //todo 同理，应该是有一个默认的string -> flow 的parser？flowBuilder
             service.loadFlow(serviceDefinition.getFlow());
         }
     }

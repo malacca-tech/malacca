@@ -36,12 +36,12 @@ public interface Entry {
 
     String getEntryKey();
 
-    /**
-     * 组件类型
-     *
-     * @param type
-     */
-    void setType(String type);
+//    /**
+//     * 组件类型
+//     *
+//     * @param type
+//     */
+//    void setType(String type);
 
     String getType();
 }

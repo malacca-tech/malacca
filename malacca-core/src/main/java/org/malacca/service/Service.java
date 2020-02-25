@@ -1,5 +1,6 @@
 package org.malacca.service;
 
+import org.malacca.component.Component;
 import org.malacca.definition.ComponentDefinition;
 import org.malacca.definition.EntryDefinition;
 import org.malacca.entry.Entry;
@@ -30,26 +31,16 @@ public interface Service {
     void setServiceId(String serviceId);
 
     /**
-     * entry 注册器
-     *
-     * @param register
+     * 加入入口
+     * @param entry
      */
-    void setEntryRegister(EntryRegister register);
+    void addEntry(Entry entry);
 
     /**
-     * 加载组件
-     * definition 组件参数定义
-     * type 组件类型 根据类型 判断使用哪种解析器
+     * 添加组件
+     * @param component
      */
-    void loadComponent(ComponentDefinition definition, String type);
-
-    /**
-     * 加载入口组件
-     *
-     * @param definition 组件参数定义
-     * @param type       组件类型 根据类型 判断使用哪种holder
-     */
-    void loadEntry(EntryDefinition definition, String type);
+    void addComponent(Component component);
 
     /**
      * 卸载入口组件

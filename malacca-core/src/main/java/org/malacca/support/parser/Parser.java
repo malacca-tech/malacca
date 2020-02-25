@@ -5,12 +5,12 @@ import java.util.Map;
 /**
  *
  */
-public interface Parser<T> {
+public interface Parser<T, K> {
     /**
-     * 根据参数 创建实例
-     * @param params 实例的成员变量
+     * 根据K的定义，获取T的实例
+     *
+     * @param definition
      * @return
-     * @throws ClassNotFoundException
      */
-    T createInstance(Map<String, Object> params);
+    T createInstance(K definition);
 }

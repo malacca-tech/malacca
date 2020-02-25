@@ -23,14 +23,19 @@ public class HttpEntry extends AbstractEntry {
 
     private String method;
 
+    private static final String TYPE = "httpEntry";
+
     public HttpEntry() {
-        super.setType("httpInput");
+        super(TYPE,TYPE);
     }
 
-    public HttpEntry(String path) {
-        this.path = path;
-        super.setType("httpInput");
-        super.setEntryKey(path);
+    public HttpEntry(String id,String name){
+        super(id,name);
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
     @Override

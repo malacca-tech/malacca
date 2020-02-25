@@ -21,9 +21,12 @@ public abstract class AbstractEntry implements Entry {
      */
     private Map<String, String> env;
 
-    private String type;
-
     private String entryKey;
+
+    protected AbstractEntry(String id,String name){
+        this.id = id;
+        this.name = name;
+    }
 
     protected Message buildMessage(Map<String, Object> headers, Object payload) {
         return MessageBuilder.withPayload(payload).copyContext(headers).build();
@@ -60,16 +63,6 @@ public abstract class AbstractEntry implements Entry {
 
     public void setEnv(Map<String, String> env) {
         this.env = env;
-    }
-
-    @Override
-    public String getType() {
-        return type;
-    }
-
-    @Override
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Override

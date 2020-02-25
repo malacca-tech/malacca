@@ -19,32 +19,9 @@ import java.util.Map;
 
 public class DefaultService extends AbstractService {
 
-    private String parserSetting = "parserSetting.yml";
-
-
     @Override
     public void loadFlow(String flowStr) {
 
-    }
-
-    // TODO: 2020/2/24  代理类
-    @Override
-    Parser getParserByType(String type) {
-        // TODO: 2020/2/24 获取解析器
-        InputStream inputStream = DefaultService.class.getClassLoader().getResourceAsStream(parserSetting);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        try {
-            Map<String, Object> parserMap = YmlParserUtils.ymlToMap(inputStreamReader);
-            String parserClassName = String.valueOf(parserMap.get(type));
-            Assert.checkNonNull(parserClassName, "没找到" + type + "解析器");
-            Class<?> parserClass = Class.forName(parserClassName);
-            Parser parser = (Parser) parserClass.newInstance();
-            return parser;
-        } catch (Exception e) {
-            // TODO: 2020/2/24 rizhi
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -58,27 +35,6 @@ public class DefaultService extends AbstractService {
         }
     }
 
-    @Override
-    Component doLoadComponent(Parser<Component> parser, ComponentDefinition definition) {
-        //组装 组件成员变量 map 以供 反射注入
-        Field[] fields = ComponentDefinition.class.getDeclaredFields();
-        Map<String, Object> params = definition.getParams();
-        Map<String, Object> commonMap = getCommonMap(fields, definition, params);
-        //解析器生成实例
-        Component instance = parser.createInstance(commonMap);
-        return instance;
-    }
-
-    @Override
-    Entry doLoadEntry(Parser<Entry> parser, EntryDefinition definition) {
-        //组装 组件成员变量 map 以供 反射注入
-        Field[] fields = EntryDefinition.class.getDeclaredFields();
-        Map<String, Object> params = definition.getParams();
-        Map<String, Object> commonMap = getCommonMap(fields, definition, params);
-        //解析器生成实例
-        Entry instance = parser.createInstance(commonMap);
-        return instance;
-    }
 
     private Map<String, Object> getCommonMap(Field[] fields, Object definition, Map<String, Object> params) {
         for (Field field : fields) {

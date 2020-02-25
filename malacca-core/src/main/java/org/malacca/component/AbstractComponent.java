@@ -17,7 +17,9 @@ import java.util.Map;
  * </p>
  */
 public abstract class AbstractComponent implements Component {
+
     private String id;
+
     private String name;
     /**
      * 判断此组件是否启用
@@ -29,13 +31,13 @@ public abstract class AbstractComponent implements Component {
      */
     private Map<String, String> env;
 
-    public String getId() {
-        return id;
+    public AbstractComponent(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
     public String getName() {

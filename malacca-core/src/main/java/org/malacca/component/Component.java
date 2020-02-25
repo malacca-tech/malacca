@@ -13,9 +13,14 @@ public interface Component {
     Message handleMessage(Message<?> message) throws MessagingException;
 
     /**
-     * 设置组件的id
-     *
-     * @param componentId
+     * 获取组件id
+     * @return
      */
-    void setId(String componentId);
+    String getId();
+
+    /**
+     * 获取
+     * @return
+     */
+    String getType();
 }

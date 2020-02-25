@@ -7,6 +7,7 @@ import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.flow.Flow;
 import org.malacca.messaging.Message;
+import org.malacca.support.ParserFactory;
 import org.malacca.support.parser.Parser;
 
 import java.util.HashMap;
@@ -56,6 +57,11 @@ public abstract class AbstractService implements Service {
     private Map<String, Object> env;
 
     /**
+     *
+     */
+    private ParserFactory parserFactory;
+
+    /**
      * component
      */
     private Map<String, Component> componentMap = new HashMap<>();
@@ -79,32 +85,6 @@ public abstract class AbstractService implements Service {
      */
     abstract void retryFrom(String componentId, Message message);
 
-    // TODO: 2020/2/24 加载日志
-    // TODO: 2020/2/24  type 去掉
-    @Override
-    public void loadComponent(ComponentDefinition definition, String type) {
-        //获取解析器
-        Parser<Component> parser = getParserByType(type);
-        //根据解析器获取组件
-        Component component = doLoadComponent(parser, definition);
-        //组件缓存
-        // TODO: 2020/2/25 id重复异常抛出
-        getComponentMap().put(definition.getId(), component);
-    }
-
-    @Override
-    public void loadEntry(EntryDefinition definition, String type) {
-        //获取解析器
-        Parser<Entry> parser = getParserByType(type);
-        //根据解析器获取组件
-        Entry entry = doLoadEntry(parser, definition);
-        // TODO: 2020/2/25 异常
-        //把entry通过注册器 注册到holder
-        entryRegister.loadEntry(entry);
-        //入口 组件缓存
-        getEntryMap().put(definition.getId(), entry);
-    }
-
     @Override
     public void unloadEntry(Entry entry) {
         entryRegister.unloadEntry(entry);
@@ -115,11 +95,15 @@ public abstract class AbstractService implements Service {
 
     }
 
-    abstract Parser getParserByType(String type);
+    @Override
+    public void addEntry(Entry entry) {
+        getEntryMap().put(entry.getType(), entry);
+    }
 
-    abstract Component doLoadComponent(Parser<Component> parser, ComponentDefinition definition);
-
-    abstract Entry doLoadEntry(Parser<Entry> parser, EntryDefinition definition);
+    @Override
+    public void addComponent(Component component) {
+        getComponentMap().put(component.getId(),component);
+    }
 
     public String getServiceId() {
         return serviceId;
@@ -128,11 +112,6 @@ public abstract class AbstractService implements Service {
     @Override
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
-    }
-
-    @Override
-    public void setEntryRegister(EntryRegister register) {
-        this.entryRegister = register;
     }
 
     public String getDescription() {
@@ -195,5 +174,6 @@ public abstract class AbstractService implements Service {
     public Map<String, Entry> getEntryMap() {
         return entryMap;
     }
+
 
 }

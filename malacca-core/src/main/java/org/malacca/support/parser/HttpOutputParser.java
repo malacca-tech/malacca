@@ -1,6 +1,8 @@
 package org.malacca.support.parser;
 
+import org.malacca.component.Component;
 import org.malacca.component.output.HttpOutComponent;
+import org.malacca.definition.ComponentDefinition;
 
 /**
  * <p>
@@ -16,9 +18,12 @@ import org.malacca.component.output.HttpOutComponent;
  * Department :
  * </p>
  */
-public class HttpOutputParser extends AbstractParser<HttpOutComponent> {
+public class HttpOutputParser implements ComponentParser {
 
-    public HttpOutputParser() {
-        super("org.malacca.component.output.HttpOutComponent");
+    @Override
+    public Component createInstance(ComponentDefinition definition) {
+        HttpOutComponent component = new HttpOutComponent(definition.getId(),definition.getName());
+        //todo set other attribute
+        return component;
     }
 }
