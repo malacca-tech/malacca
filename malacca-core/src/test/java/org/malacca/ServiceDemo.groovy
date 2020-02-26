@@ -1,10 +1,16 @@
 package org.malacca
 
+import com.alibaba.fastjson.JSONObject
 import org.malacca.entry.Entry
 import org.malacca.entry.holder.HttpEntryHolder
 import org.malacca.entry.register.DefaultEntryRegister
+import org.malacca.messaging.Message
 import org.malacca.service.DefaultServiceManager
+import org.malacca.support.MessageBuilder
 import spock.lang.Specification
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /**
  * <p>
@@ -40,7 +46,26 @@ class ServiceDemo extends Specification {
         serviceManager.loadService(serviceYml)
         println("服务加载成功")
         println("开始测试卸载")
+        def service = serviceManager.getServices().get("A001")
+        def jsonObject = new JSONObject()
+        jsonObject.put("code", 1)
+        def message = MessageBuilder.withPayload(jsonObject.toJSONString()).build();
+        service.getFlow().getNextComponents("component1",message)
         serviceManager.unloadService("A001")
         println("卸载成功")
+    }
+
+    def "正则测试"() {
+        given: "准备数据"
+        def rxg = "\\[\\s*router\\s*:\\s*(\\S*?)\\s*]"
+        def rxg1 = "-"
+        def str = "[router:router1]"
+        def p = Pattern.compile(rxg);
+        def m = p.matcher(str);
+        while (m.find()) {
+            println("jinlail")
+            println(m.group(0))
+            println(m.group(1))
+        }
     }
 }

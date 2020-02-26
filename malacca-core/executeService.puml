@@ -1,0 +1,10 @@
+@startuml
+EntryHolder -> Entry: handlerMessage(message)
+Entry -> Service: notice(id,Message)
+Service -> Flow:getNextElements(componentId)
+Service -> Service:filterComponents
+Service-> Component:handlerMessage(Message)
+Component-> Service: notice(id,Message)
+Service -> Flow:getNextElements(componentId)
+Service-> Component:handlerMessage(Message)
+@enduml

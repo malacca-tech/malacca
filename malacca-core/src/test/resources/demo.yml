@@ -59,10 +59,24 @@ components:
     env:
       key1: value1
       key2: value3
+  - type: http
+    id: soapOut2
+    #组件name
+    name: 数据上报2
+    #组件是否启用
+    status: true
+    #组件内部属性
+    params:
+      url: http://www.baidu.com
+      timeout: 10000
+    #组件环境变量 key-value 键值对
+    env:
+      key1: value1
+      key2: value3
   # 流程 start 开始 stop结束 用于描述业务流程关系
-flow: >
-  start --> component1
-  start --> component2
-  component1 -- ${payload.code==1} --> soapOut1
-  component2 -- ${payload.code==0} --> soapOut1
-  soapOut1 --> stop
+flow: |
+  component1 -.[ router:router1] .-> soapOut1
+  component1 --> soapOut2
+  component2 - [router:router2] -> soapOut1
+  soapOut1 --> soapOut2
+  component2 -E-> soapOut2

@@ -83,11 +83,6 @@ public abstract class AbstractService implements Service {
     }
 
     @Override
-    public void loadFlow(String flowStr) {
-
-    }
-
-    @Override
     public void addEntry(Entry entry) {
         getEntryMap().put(entry.getId(), entry);
     }

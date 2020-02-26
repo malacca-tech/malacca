@@ -18,8 +18,6 @@ public class HttpInputParser implements EntryParser {
         entry.setStatus(definition.isStatus());
         entry.setEnv(definition.getEnv());
         Map<String, Object> params = definition.getParams();
-        // TODO: 2020/2/25 注入其它属性，并对属性进行校验 并且属性的key值要写成常量，作为parser的成员变量
-        // todo 按照下面的规则和方式把其它的补全
         setPath(entry, params.get(URI_KEY));
         setMethod(entry, params.get(METHOD_KEY));
         entry.setEntryKey();

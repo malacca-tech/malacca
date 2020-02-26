@@ -7,12 +7,15 @@ import org.malacca.definition.ServiceDefinition;
 import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.exception.ServiceLoadException;
+import org.malacca.flow.Flow;
+import org.malacca.flow.FlowBuilder;
 import org.malacca.messaging.Message;
 import org.malacca.support.ParserFactory;
 import org.malacca.support.parser.Parser;
 import org.malacca.utils.YmlParserUtils;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +57,12 @@ public abstract class AbstractServiceManager implements ServiceManager {
      */
     protected ParserFactory parserFactory;
 
-    protected AbstractServiceManager(EntryRegister entryRegister, ParserFactory parserFactory) {
+    protected FlowBuilder flowBuilder;
+
+    protected AbstractServiceManager(EntryRegister entryRegister, ParserFactory parserFactory, FlowBuilder flowBuilder) {
         this.entryRegister = entryRegister;
         this.parserFactory = parserFactory;
+        this.flowBuilder = flowBuilder;
         this.serviceMap = new HashMap<>();
     }
 
@@ -105,7 +111,8 @@ public abstract class AbstractServiceManager implements ServiceManager {
                 service.addComponent(component);
             }
             //todo 同理，应该是有一个默认的string -> flow 的parser？flowBuilder
-            service.loadFlow(serviceDefinition.getFlow());
+            Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(),  service.getEntryMap().values());
+            service.setFlow(flow);
 
             getServiceMap().put(service.getServiceId(), service);
         }
@@ -171,5 +178,9 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     public void setParserFactory(ParserFactory parserFactory) {
         this.parserFactory = parserFactory;
+    }
+
+    public void setFlowBuilder(FlowBuilder flowBuilder) {
+        this.flowBuilder = flowBuilder;
     }
 }

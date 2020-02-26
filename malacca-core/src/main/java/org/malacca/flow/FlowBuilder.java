@@ -1,5 +1,10 @@
 package org.malacca.flow;
 
+import org.malacca.entry.Entry;
+
+import java.util.Collection;
+import java.util.List;
+
 /**
  * <p>
  * Title :
@@ -14,7 +19,7 @@ package org.malacca.flow;
  * Department :
  * </p>
  */
-public class FlowBuilder {
+public interface FlowBuilder {
 
     /**
      * 根据流程字符串 解析出流程
@@ -22,7 +27,6 @@ public class FlowBuilder {
      * @param flowStr
      * @return
      */
-    Flow buildFlow(String flowStr) {
-        return null;
-    }
+    Flow buildFlow(String flowStr,  Collection<Entry> entries);
+
 }

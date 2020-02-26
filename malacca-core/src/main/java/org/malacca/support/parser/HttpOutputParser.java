@@ -27,14 +27,13 @@ public class HttpOutputParser implements ComponentParser {
     public static final String TIMEOUT_KEY = "timeout";
 
     @Override
-    public Component createInstance(ComponentDefinition definition) {
+     public Component createInstance(ComponentDefinition definition) {
         HttpOutComponent component = new HttpOutComponent(definition.getId(), definition.getName());
         component.setStatus(definition.isStatus());
         component.setEnv(definition.getEnv());
         Map<String, Object> params = definition.getParams();
         setUrl(component, params.get(URL_KEY));
         setTimeout(component, params.get(TIMEOUT_KEY));
-        //todo set other attribute】
         return component;
     }
 

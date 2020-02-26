@@ -3,6 +3,7 @@ package org.malacca.flow;
 import org.malacca.messaging.Message;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -24,5 +25,7 @@ public interface Flow {
      * componentId 组件id
      * message 提供元数据 上下文 用于流程条件判断
      */
-    List<String> getNextComponents(String componentId, Message message);
+    List<FlowElement> getNextComponents(String componentId, Message message);
+
+    void addFlowElement(FlowElement flowElement);
 }

@@ -5,6 +5,7 @@ import org.malacca.definition.ComponentDefinition;
 import org.malacca.definition.EntryDefinition;
 import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
+import org.malacca.flow.Flow;
 
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public interface Service {
     /**
      * 加载流程 使用FlowBuilder 闯将Flow
      */
-    void loadFlow(String flowStr);
+    void setFlow(Flow flow);
 
     /**
      * 获取entry列表
@@ -69,4 +70,6 @@ public interface Service {
      * @return
      */
     Map<String, Component> getComponentMap();
+
+    Flow getFlow();
 }
