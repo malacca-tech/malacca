@@ -3,9 +3,7 @@ package org.malacca.flow;
 import cn.hutool.core.util.StrUtil;
 import org.malacca.entry.Entry;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,11 +46,9 @@ public class DefaultFlowBuilder implements FlowBuilder {
             flowElementStr = flowElementStr.trim();
             FlowElement flowElement = new FlowElement();
             String componentId = flowElementStr.substring(0, flowElementStr.indexOf(" "));
-            ArrayList<FlowElement> nextFlowElements = new ArrayList<>();
             FlowElement nextComponent = buildElement(flowElementStr);
-            nextFlowElements.add(nextComponent);
             flowElement.setComponentId(componentId);
-            flowElement.setNextElements(nextFlowElements);
+            flowElement.setNextElement(nextComponent);
             flow.addFlowElement(flowElement);
         }
         return flow;

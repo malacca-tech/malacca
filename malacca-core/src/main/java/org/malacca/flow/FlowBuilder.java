@@ -3,7 +3,6 @@ package org.malacca.flow;
 import org.malacca.entry.Entry;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <p>
@@ -27,6 +26,6 @@ public interface FlowBuilder {
      * @param flowStr
      * @return
      */
-    Flow buildFlow(String flowStr,  Collection<Entry> entries);
+    Flow buildFlow(String flowStr, Collection<Entry> entries);
 
 }

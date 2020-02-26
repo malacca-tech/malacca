@@ -1,14 +1,9 @@
 package org.malacca.service;
 
 import org.malacca.component.Component;
-import org.malacca.definition.ComponentDefinition;
-import org.malacca.definition.EntryDefinition;
 import org.malacca.entry.Entry;
-import org.malacca.entry.register.EntryRegister;
 import org.malacca.flow.Flow;
 import org.malacca.messaging.Message;
-import org.malacca.support.ParserFactory;
-import org.malacca.support.parser.Parser;
 
 import java.util.HashMap;
 import java.util.Map;

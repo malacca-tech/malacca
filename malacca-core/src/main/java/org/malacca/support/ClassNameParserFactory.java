@@ -1,10 +1,7 @@
 package org.malacca.support;
 
-import cn.hutool.core.util.StrUtil;
 import org.malacca.component.Component;
-import org.malacca.component.output.HttpOutComponent;
 import org.malacca.entry.Entry;
-import org.malacca.entry.HttpEntry;
 import org.malacca.support.parser.HttpInputParser;
 import org.malacca.support.parser.HttpOutputParser;
 import org.malacca.support.parser.Parser;

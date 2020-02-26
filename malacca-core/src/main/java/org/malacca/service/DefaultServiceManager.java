@@ -7,8 +7,6 @@ import org.malacca.messaging.Message;
 import org.malacca.support.ClassNameParserFactory;
 import org.malacca.support.ParserFactory;
 
-import java.util.Map;
-
 /**
  * <p>
  * Title :

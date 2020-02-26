@@ -43,9 +43,11 @@ public class DefaultFlow implements Flow {
         Assert.notNull(flowElement, "flowElement is null!");
         List<FlowElement> elements = elementMap.get(flowElement.getComponentId());
         if (elements != null && elements.size() > 0) {
-            elements.addAll(flowElement.getNextElements());
+            elements.add(flowElement.getNextElement());
         } else {
-            elementMap.put(flowElement.getComponentId(), flowElement.getNextElements());
+            List<FlowElement> nextElements = new ArrayList<>();
+            nextElements.add(flowElement.getNextElement());
+            elementMap.put(flowElement.getComponentId(), nextElements);
         }
     }
 }

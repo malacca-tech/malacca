@@ -1,7 +1,5 @@
 package org.malacca.flow;
 
-import java.util.List;
-
 /**
  * <p>
  * Title :
@@ -36,7 +34,7 @@ public class FlowElement {
      */
     private String routerId;
 
-    List<FlowElement> nextElements;
+    FlowElement nextElements;
 
     public String getComponentId() {
         return componentId;
@@ -62,11 +60,11 @@ public class FlowElement {
         isErrorChannel = errorChannel;
     }
 
-    public List<FlowElement> getNextElements() {
+    public FlowElement getNextElement() {
         return nextElements;
     }
 
-    public void setNextElements(List<FlowElement> nextElements) {
+    public void setNextElement(FlowElement nextElements) {
         this.nextElements = nextElements;
     }
 
