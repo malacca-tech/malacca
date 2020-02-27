@@ -1,6 +1,7 @@
 package org.malacca.entry;
 
 import org.malacca.messaging.Message;
+import org.malacca.service.Listener;
 
 /**
  * <p>
@@ -37,4 +38,6 @@ public interface Entry {
     String getType();
 
     String getId();
+
+    void setListener(Listener listener);
 }

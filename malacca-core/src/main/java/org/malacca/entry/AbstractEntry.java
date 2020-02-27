@@ -1,6 +1,7 @@
 package org.malacca.entry;
 
 import org.malacca.messaging.Message;
+import org.malacca.service.Listener;
 import org.malacca.support.MessageBuilder;
 
 import java.util.Map;
@@ -23,7 +24,9 @@ public abstract class AbstractEntry implements Entry {
 
     protected String entryKey;
 
-    protected AbstractEntry(String id,String name){
+    protected Listener listener;
+
+    protected AbstractEntry(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -70,4 +73,12 @@ public abstract class AbstractEntry implements Entry {
         return entryKey;
     }
 
+    public Listener getListener() {
+        return listener;
+    }
+
+    @Override
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
 }

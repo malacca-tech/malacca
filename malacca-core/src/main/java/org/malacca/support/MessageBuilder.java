@@ -1,5 +1,6 @@
 package org.malacca.support;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sun.tools.javac.util.Assert;
 import org.malacca.messaging.GenericMessage;
 import org.malacca.messaging.Message;
@@ -62,6 +63,24 @@ public class MessageBuilder<T> {
     public MessageBuilder removeContext(String key, Object value) {
         this.context.remove(key, value);
         return this;
+    }
+
+    public static MessageBuilder success() {
+        // TODO: 2020/2/27 默认的返回成功的格式
+        JSONObject successJson = new JSONObject();
+        successJson.put("code", "1");
+        MessageBuilder<JSONObject> builder = new MessageBuilder<>(successJson, null);
+        return builder;
+    }
+
+    public static MessageBuilder error(String tips, Exception e) {
+        // TODO: 2020/2/27 默认的返回失败的格式
+        JSONObject successJson = new JSONObject();
+        successJson.put("code", "0");
+        successJson.put("tips", tips);
+        successJson.put("cause", e.getMessage());
+        MessageBuilder<JSONObject> builder = new MessageBuilder<>(successJson, null);
+        return builder;
     }
 
     public Message<T> build() {

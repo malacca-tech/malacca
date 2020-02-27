@@ -71,5 +71,9 @@ public interface Service {
      */
     Map<String, Component> getComponentMap();
 
+    /**
+     * 获取流程
+     * @return
+     */
     Flow getFlow();
 }

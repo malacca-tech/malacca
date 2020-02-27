@@ -1,0 +1,12 @@
+@startuml
+Service  -> entry: setListener
+entry -> Service: onFinish(Message)
+Service-> Service: getRunner
+Service ->Runner
+Runner-> Component:handMessage
+Component-> Service:onFinish
+
+Runner<-- Component :returnMessage
+entry <-- Service: returnMessage
+
+@enduml

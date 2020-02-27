@@ -1,5 +1,7 @@
 package org.malacca.component;
 
+import org.malacca.service.Listener;
+
 import java.util.Map;
 
 /**
@@ -30,6 +32,8 @@ public abstract class AbstractComponent implements Component {
      * 组件内部使用的环境变量
      */
     private Map<String, String> env;
+
+    protected Listener listener;
 
     public AbstractComponent(String id, String name) {
         this.id = id;
@@ -62,5 +66,14 @@ public abstract class AbstractComponent implements Component {
 
     public void setEnv(Map<String, String> env) {
         this.env = env;
+    }
+
+    public Listener getListener() {
+        return listener;
+    }
+
+    @Override
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 }

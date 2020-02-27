@@ -23,7 +23,7 @@ public class HttpOutComponent extends AbstractComponent {
     @Override
     public Message handleMessage(Message<?> message) throws MessagingException {
         // TODO: 2020/2/25 to impl
-        return null;
+        return getListener().onfinish(getId(), message);
     }
 
     @Override

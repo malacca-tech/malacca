@@ -2,6 +2,7 @@ package org.malacca.component;
 
 import org.malacca.messaging.Message;
 import org.malacca.exception.MessagingException;
+import org.malacca.service.Listener;
 
 public interface Component {
     /**
@@ -23,4 +24,6 @@ public interface Component {
      * @return
      */
     String getType();
+
+    void setListener(Listener listener);
 }

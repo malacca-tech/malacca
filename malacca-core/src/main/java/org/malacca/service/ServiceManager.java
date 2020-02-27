@@ -3,6 +3,7 @@ package org.malacca.service;
 import org.malacca.exception.ServiceLoadException;
 
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * <p>
@@ -34,4 +35,6 @@ public interface ServiceManager {
      * 获取Service列表
      */
     Map<String, Service> getServices();
+
+    ThreadPoolExecutor getThreadExecutor();
 }

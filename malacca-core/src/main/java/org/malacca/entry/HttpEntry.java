@@ -41,7 +41,8 @@ public class HttpEntry extends AbstractEntry {
     @Override
     public Message handleMessage(Message<?> message) {
         // TODO: 2020/2/24 统一入口 组件消息 ，然后调用此方法 然后 获取下一个 组件 发出去
-        return null;
+        Message<?> resultMessage = getListener().onfinish(message);
+        return resultMessage;
     }
 
     @Override

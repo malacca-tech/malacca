@@ -22,7 +22,7 @@ import java.util.Map;
  * Department :
  * </p>
  */
-public abstract class AbstractService implements Service {
+public abstract class AbstractService implements Service{
 
     /**
      * 服务id
@@ -156,5 +156,4 @@ public abstract class AbstractService implements Service {
     public Map<String, Entry> getEntryMap() {
         return entryMap;
     }
-
 }

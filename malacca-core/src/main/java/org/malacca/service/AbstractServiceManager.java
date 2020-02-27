@@ -58,6 +58,8 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     protected FlowBuilder flowBuilder;
 
+    private Listener listener;
+
     protected AbstractServiceManager(EntryRegister entryRegister, ParserFactory parserFactory, FlowBuilder flowBuilder) {
         this.entryRegister = entryRegister;
         this.parserFactory = parserFactory;
@@ -99,6 +101,8 @@ public abstract class AbstractServiceManager implements ServiceManager {
             for (EntryDefinition entryDefinition : entryDefinitions) {
                 Parser<Entry, EntryDefinition> parser = parserFactory.getParser(entryDefinition.getType(), Entry.class);
                 Entry entry = parser.createInstance(entryDefinition);
+                //listener注入到entry
+                entry.setListener(listener);
                 service.addEntry(entry);
                 entryRegister.registerEntry(entry);
             }
@@ -107,12 +111,12 @@ public abstract class AbstractServiceManager implements ServiceManager {
             for (ComponentDefinition componentDefinition : componentDefinitions) {
                 Parser<Component, ComponentDefinition> parser = parserFactory.getParser(componentDefinition.getType(), Component.class);
                 Component component = parser.createInstance(componentDefinition);
+                component.setListener(listener);
                 service.addComponent(component);
             }
             //todo 同理，应该是有一个默认的string -> flow 的parser？flowBuilder
-            Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(),  service.getEntryMap().values());
+            Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(), service);
             service.setFlow(flow);
-
             getServiceMap().put(service.getServiceId(), service);
         }
     }
@@ -144,6 +148,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
         defaultService.setDescription(definition.getDescription());
         defaultService.setVersion(definition.getVersion());
         defaultService.setEnv(definition.getEnv());
+        listener = defaultService;
         return defaultService;
     }
 

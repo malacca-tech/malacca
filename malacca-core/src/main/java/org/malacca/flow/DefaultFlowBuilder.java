@@ -1,9 +1,9 @@
 package org.malacca.flow;
 
 import cn.hutool.core.util.StrUtil;
-import org.malacca.entry.Entry;
+import org.malacca.exception.FlowBuildException;
+import org.malacca.service.Service;
 
-import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,19 +39,33 @@ public class DefaultFlowBuilder implements FlowBuilder {
     public static final String ROUTER_KEY = "\\[\\s*router\\s*:\\s*(\\S*?)\\s*]";
 
     @Override
-    public Flow buildFlow(String flowStr, Collection<Entry> entries) {
-        String[] flowElementStrs = flowStr.split("\n");
-        DefaultFlow flow = new DefaultFlow();
-        for (String flowElementStr : flowElementStrs) {
-            flowElementStr = flowElementStr.trim();
-            FlowElement flowElement = new FlowElement();
-            String componentId = flowElementStr.substring(0, flowElementStr.indexOf(" "));
-            FlowElement nextComponent = buildElement(flowElementStr);
-            flowElement.setComponentId(componentId);
-            flowElement.setNextElement(nextComponent);
-            flow.addFlowElement(flowElement);
+    public Flow buildFlow(String flowStr, Service service) throws FlowBuildException {
+        //按行解析
+        try {
+            String[] flowElementStrs = flowStr.split("\n");
+            DefaultFlow flow = new DefaultFlow();
+            for (String flowElementStr : flowElementStrs) {
+                flowElementStr = flowElementStr.trim();
+                FlowElement flowElement = new FlowElement();
+                //获取组件id 组件id 后面必须有空格
+                String componentId = flowElementStr.substring(0, flowElementStr.indexOf(" "));
+                //检验 组件id是否存在
+                if (service.getEntryMap().get(componentId) == null && service.getComponentMap().get(componentId) == null) {
+                    // TODO: 2020/2/27 异常
+                    throw new FlowBuildException();
+                }
+                FlowElement nextComponent = buildElement(flowElementStr);
+                flowElement.setComponentId(componentId);
+                flowElement.setNextElement(nextComponent);
+                flow.addFlowElement(flowElement);
+            }
+            return flow;
+        } catch (FlowBuildException e) {
+            throw e;
+        } catch (Exception e) {
+            // TODO: 2020/2/27
+            throw new FlowBuildException();
         }
-        return flow;
     }
 
     // TODO: 2020/2/26 死循环

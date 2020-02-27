@@ -1,8 +1,7 @@
 package org.malacca.flow;
 
-import org.malacca.entry.Entry;
-
-import java.util.Collection;
+import org.malacca.exception.FlowBuildException;
+import org.malacca.service.Service;
 
 /**
  * <p>
@@ -26,6 +25,6 @@ public interface FlowBuilder {
      * @param flowStr
      * @return
      */
-    Flow buildFlow(String flowStr, Collection<Entry> entries);
+    Flow buildFlow(String flowStr, Service service) throws FlowBuildException;
 
 }
