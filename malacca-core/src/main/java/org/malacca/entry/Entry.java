@@ -1,5 +1,6 @@
 package org.malacca.entry;
 
+import org.malacca.exector.Executor;
 import org.malacca.messaging.Message;
 import org.malacca.service.Listener;
 
@@ -39,5 +40,5 @@ public interface Entry {
 
     String getId();
 
-    void setListener(Listener listener);
+    void setFlowExecutor(Executor executor);
 }

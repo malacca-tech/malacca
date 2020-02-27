@@ -7,6 +7,8 @@ import org.malacca.definition.ServiceDefinition;
 import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.exception.ServiceLoadException;
+import org.malacca.exector.Executor;
+import org.malacca.exector.FlowExecutor;
 import org.malacca.flow.Flow;
 import org.malacca.flow.FlowBuilder;
 import org.malacca.messaging.Message;
@@ -18,7 +20,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -56,15 +61,26 @@ public abstract class AbstractServiceManager implements ServiceManager {
      */
     protected ParserFactory parserFactory;
 
+    /**
+     * 加载flow的builder
+     */
     protected FlowBuilder flowBuilder;
 
-    private Listener listener;
+    /**
+     * 流程执行器
+     */
+    protected Executor executor;
 
     protected AbstractServiceManager(EntryRegister entryRegister, ParserFactory parserFactory, FlowBuilder flowBuilder) {
         this.entryRegister = entryRegister;
         this.parserFactory = parserFactory;
         this.flowBuilder = flowBuilder;
         this.serviceMap = new HashMap<>();
+        this.executor = new FlowExecutor();
+        // TODO: 2020/2/27 线程池舒初始化
+        threadExecutor = new ThreadPoolExecutor(5, 200,
+                10, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(10000));
     }
 
     /**
@@ -101,22 +117,23 @@ public abstract class AbstractServiceManager implements ServiceManager {
             for (EntryDefinition entryDefinition : entryDefinitions) {
                 Parser<Entry, EntryDefinition> parser = parserFactory.getParser(entryDefinition.getType(), Entry.class);
                 Entry entry = parser.createInstance(entryDefinition);
-                //listener注入到entry
-                entry.setListener(listener);
+                entry.setFlowExecutor(executor);//执行器注入到entry
                 service.addEntry(entry);
                 entryRegister.registerEntry(entry);
             }
 
+            //加载组件
             List<ComponentDefinition> componentDefinitions = serviceDefinition.getComponents();
             for (ComponentDefinition componentDefinition : componentDefinitions) {
                 Parser<Component, ComponentDefinition> parser = parserFactory.getParser(componentDefinition.getType(), Component.class);
                 Component component = parser.createInstance(componentDefinition);
-                component.setListener(listener);
                 service.addComponent(component);
             }
-            //todo 同理，应该是有一个默认的string -> flow 的parser？flowBuilder
-            Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(), service);
+
+            //加载流程
+            Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(), service.getEntryMap(), service.getComponentMap());
             service.setFlow(flow);
+            initFlowExecutor(service, flow);//flow执行器初始化
             getServiceMap().put(service.getServiceId(), service);
         }
     }
@@ -148,7 +165,8 @@ public abstract class AbstractServiceManager implements ServiceManager {
         defaultService.setDescription(definition.getDescription());
         defaultService.setVersion(definition.getVersion());
         defaultService.setEnv(definition.getEnv());
-        listener = defaultService;
+        // TODO: 2020/2/27 应该注入
+        defaultService.setServiceManager(this);
         return defaultService;
     }
 
@@ -157,6 +175,12 @@ public abstract class AbstractServiceManager implements ServiceManager {
             this.serviceMap = new HashMap<>();
         }
         return serviceMap;
+    }
+
+    private void initFlowExecutor(Service service, Flow flow) {
+        executor.setComponentMap(service.getComponentMap());
+        executor.setFlow(flow);
+        executor.setPoolExecutor(threadExecutor);
     }
 
     // TODO: 2020/2/20 连接池初始化
@@ -186,5 +210,9 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     public void setFlowBuilder(FlowBuilder flowBuilder) {
         this.flowBuilder = flowBuilder;
+    }
+
+    public Executor getExecutor() {
+        return executor;
     }
 }

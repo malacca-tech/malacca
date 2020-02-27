@@ -1,7 +1,7 @@
 package org.malacca.entry;
 
+import org.malacca.exector.Executor;
 import org.malacca.messaging.Message;
-import org.malacca.service.Listener;
 import org.malacca.support.MessageBuilder;
 
 import java.util.Map;
@@ -24,7 +24,7 @@ public abstract class AbstractEntry implements Entry {
 
     protected String entryKey;
 
-    protected Listener listener;
+    protected Executor flowExecutor;
 
     protected AbstractEntry(String id, String name) {
         this.id = id;
@@ -73,12 +73,11 @@ public abstract class AbstractEntry implements Entry {
         return entryKey;
     }
 
-    public Listener getListener() {
-        return listener;
+    public Executor getFlowExecutor() {
+        return flowExecutor;
     }
 
-    @Override
-    public void setListener(Listener listener) {
-        this.listener = listener;
+    public void setFlowExecutor(Executor flowExecutor) {
+        this.flowExecutor = flowExecutor;
     }
 }

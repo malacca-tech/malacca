@@ -24,6 +24,4 @@ public interface Component {
      * @return
      */
     String getType();
-
-    void setListener(Listener listener);
 }

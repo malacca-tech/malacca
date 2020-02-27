@@ -17,62 +17,47 @@ package org.malacca.flow;
 public class FlowElement {
 
     /**
-     * 当前组件id
+     * 前面组件id
      */
-    private String componentId;
-    /**
-     * 是否是同步
-     */
-    private boolean isSynchronized = true;
-    /**
-     * 是否是异常通道
-     */
-    private boolean isErrorChannel = false;
+    private String preComponentId;
 
     /**
-     * 路由使用的条件 ，支持freemarker语法
+     * 后面组件id
      */
-    private String routerId;
+    private String sufComponentId;
 
-    FlowElement nextElements;
+    /**
+     * 通道类型
+     */
+    private ChannelType type;
 
-    public String getComponentId() {
-        return componentId;
+    public FlowElement(String preComponentId, ChannelType type, String sufComponentId) {
+        this.preComponentId = preComponentId;
+        this.sufComponentId = sufComponentId;
+        this.type = type;
     }
 
-    public void setComponentId(String componentId) {
-        this.componentId = componentId;
+    public String getPreComponentId() {
+        return preComponentId;
     }
 
-    public boolean isSynchronized() {
-        return isSynchronized;
+    public void setPreComponentId(String preComponentId) {
+        this.preComponentId = preComponentId;
     }
 
-    public void setSynchronized(boolean aSynchronized) {
-        isSynchronized = aSynchronized;
+    public String getSufComponentId() {
+        return sufComponentId;
     }
 
-    public boolean isErrorChannel() {
-        return isErrorChannel;
+    public void setSufComponentId(String sufComponentId) {
+        this.sufComponentId = sufComponentId;
     }
 
-    public void setErrorChannel(boolean errorChannel) {
-        isErrorChannel = errorChannel;
+    public ChannelType getType() {
+        return type;
     }
 
-    public FlowElement getNextElement() {
-        return nextElements;
-    }
-
-    public void setNextElement(FlowElement nextElements) {
-        this.nextElements = nextElements;
-    }
-
-    public String getRouterId() {
-        return routerId;
-    }
-
-    public void setRouterId(String routerId) {
-        this.routerId = routerId;
+    public void setType(ChannelType type) {
+        this.type = type;
     }
 }

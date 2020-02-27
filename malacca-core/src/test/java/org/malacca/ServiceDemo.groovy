@@ -47,10 +47,10 @@ class ServiceDemo extends Specification {
         println("服务加载成功")
         println("开始测试卸载")
         def service = serviceManager.getServices().get("A001")
-        def jsonObject = new JSONObject()
-        jsonObject.put("code", 1)
-        def message = MessageBuilder.withPayload(jsonObject.toJSONString()).build();
-        service.getFlow().getNextComponents("component1",message)
+        def httpEntry = service.getEntryMap().get("component1")
+        def message = MessageBuilder.withPayload("ss").build()
+       def result= httpEntry.handleMessage(message)
+        println(result)
         serviceManager.unloadService("A001")
         println("卸载成功")
     }
@@ -58,7 +58,6 @@ class ServiceDemo extends Specification {
     def "正则测试"() {
         given: "准备数据"
         def rxg = "\\[\\s*router\\s*:\\s*(\\S*?)\\s*]"
-        def rxg1 = "-"
         def str = "[router:router1]"
         def p = Pattern.compile(rxg);
         def m = p.matcher(str);

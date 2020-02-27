@@ -34,20 +34,20 @@ public class DefaultFlow implements Flow {
     }
 
     @Override
-    public List<FlowElement> getNextComponents(String componentId, Message message) {
+    public List<FlowElement> getNextFlowElements(String componentId, Message message) {
         return elementMap.get(componentId);
     }
 
     @Override
     public void addFlowElement(FlowElement flowElement) {
         Assert.notNull(flowElement, "flowElement is null!");
-        List<FlowElement> elements = elementMap.get(flowElement.getComponentId());
+        List<FlowElement> elements = elementMap.get(flowElement.getPreComponentId());
         if (elements != null && elements.size() > 0) {
-            elements.add(flowElement.getNextElement());
+            elements.add(flowElement);
         } else {
             List<FlowElement> nextElements = new ArrayList<>();
-            nextElements.add(flowElement.getNextElement());
-            elementMap.put(flowElement.getComponentId(), nextElements);
+            nextElements.add(flowElement);
+            elementMap.put(flowElement.getPreComponentId(), nextElements);
         }
     }
 }

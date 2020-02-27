@@ -1,7 +1,10 @@
 package org.malacca.flow;
 
+import org.malacca.component.Component;
+import org.malacca.entry.Entry;
 import org.malacca.exception.FlowBuildException;
-import org.malacca.service.Service;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +28,6 @@ public interface FlowBuilder {
      * @param flowStr
      * @return
      */
-    Flow buildFlow(String flowStr, Service service) throws FlowBuildException;
+    Flow buildFlow(String flowStr, Map<String, Entry> entryMap, Map<String, Component> componentMap) throws FlowBuildException;
 
 }
