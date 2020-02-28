@@ -1,5 +1,6 @@
 package org.malacca.support;
 
+import cn.hutool.core.lang.Assert;
 import org.malacca.component.Component;
 import org.malacca.entry.Entry;
 import org.malacca.support.parser.HttpInputParser;
@@ -57,11 +58,13 @@ public class ClassNameParserFactory implements ParserFactory {
 
     private Parser getEntryParser(String type) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         String className = entryTypeAlias.get(type);
+        Assert.notNull(className, " {}类型 没有找到对应的Entry解析器", type);
         return createParserInstance(className);
     }
 
     private Parser getComponentParser(String type) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         String className = componentTypeAlias.get(type);
+        Assert.notNull(className, " {}类型 没有找到对应的Component解析器", type);
         return createParserInstance(className);
     }
 

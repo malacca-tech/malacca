@@ -1,6 +1,6 @@
 package org.malacca.flow
 
-import org.junit.jupiter.api.Test
+import org.malacca.support.MessageBuilder
 import spock.lang.Specification
 
 /**
@@ -18,16 +18,6 @@ import spock.lang.Specification
  * </p>
  */
 
-//ef "test1"() {
-//    given: "准备mock数据"
-//
-//    expect: "测试方法"
-//    z == calculateService.plus(x, y)
-//
-//    where: "校验结果"
-//    x | y || z
-//    1 | 0 || 1
-//    2 | 1 || 3
 
 class FlowBuilderTests extends Specification {
 
@@ -52,5 +42,30 @@ class FlowBuilderTests extends Specification {
         'a --> b   '    | 'a' | 'b' | true   | false
         'a    --> b'    | 'a' | 'b' | true   | false
         '   a -->    b' | 'a' | 'b' | true   | false
+    }
+
+    def "测试生成Flow"() {
+        given: "创建builder实例,创建flow"
+        def builder = new DefaultFlowBuilder()
+        def flowStr = "component1 -.[ router:router1] .-> soapOut1\n" +
+                "  component1 --> soapOut2\n" +
+                "  component2 - [router:router2] -> soapOut1\n" +
+                "  soapOut1 --> soapOut2\n" +
+                "  component2 -E-> soapOut2"
+        def flow = builder.buildFlow(flowStr, null, null)
+        def elements = flow.getNextFlowElements(flowComponentId, MessageBuilder.withPayload("0").build())
+
+        expect: "判断生成结果"
+        assert elements.size() == elementsSize
+        assert elements.get(size).sufComponentId == sufComponentId
+        assert elements.get(size).preComponentId == preComponentId
+        assert elements.get(size).type.exceptionType == exceptionType
+        assert elements.get(size).type.synchronized == isSynchronized
+
+        where: "准备数据"
+        flowComponentId | elementsSize | size | preComponentId | sufComponentId | exceptionType | isSynchronized
+        'component1'    | 2            | 0    | 'component1'   | 'soapOut1'     | false         | false
+        'component2'    | 2            | 0    | 'component2'   | 'soapOut1'     | false         | true
+        'soapOut1'      | 1            | 0    | 'soapOut1'     | 'soapOut2'     | false         | true
     }
 }

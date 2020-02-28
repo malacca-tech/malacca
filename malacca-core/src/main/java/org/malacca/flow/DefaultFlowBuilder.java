@@ -67,7 +67,6 @@ public class DefaultFlowBuilder implements FlowBuilder {
     }
 
     private ChannelType parseChannelExpression(String channelExpression) {
-        //todo 你自己搬一下代码
         DefaultChannelType channelType = new DefaultChannelType();
         Pattern p = Pattern.compile(ASY_REGEX);
         Matcher m = p.matcher(channelExpression);
@@ -92,7 +91,10 @@ public class DefaultFlowBuilder implements FlowBuilder {
         line = line.trim();
         int firstSplitPointIndex = line.indexOf(" ");
         int lastSplitPointIndex = line.lastIndexOf(" ");
-        //todo 这里检查一下first < last
+        if (firstSplitPointIndex >= lastSplitPointIndex) {
+            // TODO: 2020/2/28 异常
+            throw new FlowBuildException();
+        }
         String preComponentId = line.substring(0, firstSplitPointIndex);
         String nextComponentId = line.substring(lastSplitPointIndex + 1);
         String channelExpression = line.substring(firstSplitPointIndex + 1, lastSplitPointIndex);
@@ -105,37 +107,6 @@ public class DefaultFlowBuilder implements FlowBuilder {
         //todo 对flow表达式进行校验
         // 1.各个组件或者entry是否存在
     }
-
-//    private FlowElement buildElement(FlowElement element, String flowElementStr) {
-//        FlowElement flowElement = new FlowElement();
-//
-//        DefaultChannelType flowElementType = new DefaultChannelType();
-//        element.setType(flowElementType);
-//
-//        //判断是否是异步
-//        Pattern p = Pattern.compile(ASY_REGEX);
-//        Matcher m = p.matcher(flowElementStr);
-//        boolean isAsy = false;
-//        String componentId = "";
-//        while (m.find()) {
-//            isAsy = true;
-//            setFlowElementAttributes(flowElementType, m.group(1).trim(), false);
-//            componentId = flowElementStr.substring(flowElementStr.lastIndexOf(m.group(0)) + m.group(0).length()).trim();
-//            element.setSufComponentId(componentId);
-//        }
-//
-//        //判断是否是 同步
-//        if (!isAsy) {
-//            Pattern syncPattern = Pattern.compile(SYNC_REGEX);
-//            Matcher syncMatcher = syncPattern.matcher(flowElementStr);
-//            while (syncMatcher.find()) {
-//                setFlowElementAttributes(flowElementType, syncMatcher.group(1).trim(), true);
-//                componentId = flowElementStr.substring(flowElementStr.lastIndexOf(syncMatcher.group(0)) + syncMatcher.group(0).length()).trim();
-//                element.setSufComponentId(componentId);
-//            }
-//        }
-//        return flowElement;
-//    }
 
     private void setFlowElementAttributes(DefaultChannelType type, String key, boolean isSync) {
         type.setSynchronized(isSync);

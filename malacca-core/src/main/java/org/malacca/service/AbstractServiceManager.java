@@ -8,7 +8,7 @@ import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.exception.ServiceLoadException;
 import org.malacca.exector.Executor;
-import org.malacca.exector.FlowExecutor;
+import org.malacca.exector.DefaultFlowExecutor;
 import org.malacca.flow.Flow;
 import org.malacca.flow.FlowBuilder;
 import org.malacca.messaging.Message;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -76,7 +75,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
         this.parserFactory = parserFactory;
         this.flowBuilder = flowBuilder;
         this.serviceMap = new HashMap<>();
-        this.executor = new FlowExecutor();
+        this.executor = new DefaultFlowExecutor();
         // TODO: 2020/2/27 线程池舒初始化
         threadExecutor = new ThreadPoolExecutor(5, 200,
                 10, TimeUnit.SECONDS,

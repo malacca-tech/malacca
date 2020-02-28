@@ -35,13 +35,6 @@ class ServiceDemo extends Specification {
         def serviceYml = scanner.hasNext() ? scanner.next() : ""
         def serviceManager = new DefaultServiceManager()
         def entryRegister = new DefaultEntryRegister()
-        entryRegister.putHolder("httpInput", new HttpEntryHolder() {
-
-            @Override
-            void unloadEntry(String id, Entry entry) {
-
-            }
-        })
         serviceManager.setEntryRegister(entryRegister)
         serviceManager.loadService(serviceYml)
         println("服务加载成功")

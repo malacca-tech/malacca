@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * Department :
  * </p>
  */
-public class FlowExecutor implements Executor {
+public class DefaultFlowExecutor implements Executor {
 
     private Flow flow;
 
@@ -32,10 +32,10 @@ public class FlowExecutor implements Executor {
 
     private Map<String, Component> componentMap;
 
-    public FlowExecutor() {
+    public DefaultFlowExecutor() {
     }
 
-    public FlowExecutor(Flow flow, ThreadPoolExecutor poolExecutor, Map<String, Component> componentMap) {
+    public DefaultFlowExecutor(Flow flow, ThreadPoolExecutor poolExecutor, Map<String, Component> componentMap) {
         this.flow = flow;
         this.poolExecutor = poolExecutor;
         this.componentMap = componentMap;
@@ -54,28 +54,20 @@ public class FlowExecutor implements Executor {
             for (FlowElement nextElement : nextElements) {
                 handleAsyncMessage(nextElement, message);
             }
-            //异步操作
             return MessageBuilder.success().build();
-        } else if (nextElements.size() == 1) {
+        } else {
             FlowElement nextElement = nextElements.get(0);
-            try {
-                if (nextElement.getType().isSynchronized()) {
-                    return this.handleSyncMessage(nextElement.getSufComponentId(), message);//同步
-                } else {
-                    handleAsyncMessage(nextElement, message);//异步
-                    return MessageBuilder.success().build();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                // TODO: 2020/2/27 异常
-                return null;
+            if (nextElement.getType().isSynchronized()) {
+                return this.handleSyncMessage(nextElement.getSufComponentId(), message);
+            } else {
+                handleAsyncMessage(nextElement, message);
+                return MessageBuilder.success().build();
             }
         }
-        return message;
     }
 
     private void handleAsyncMessage(FlowElement element, Message<?> message) {
-        FlowExecutor flowExecutor = new FlowExecutor(flow, poolExecutor, componentMap);
+        DefaultFlowExecutor flowExecutor = new DefaultFlowExecutor(flow, poolExecutor, componentMap);
         FlowExecutorRunner runner = new FlowExecutorRunner(flowExecutor, element.getSufComponentId(), message);
         poolExecutor.execute(runner);
     }
@@ -88,13 +80,13 @@ public class FlowExecutor implements Executor {
 
     public class FlowExecutorRunner implements Runnable {
 
-        private FlowExecutor flowExecutor;
+        private DefaultFlowExecutor flowExecutor;
 
         private String componentId;
 
         private Message<?> message;
 
-        public FlowExecutorRunner(FlowExecutor flowExecutor, String componentId, Message<?> message) {
+        public FlowExecutorRunner(DefaultFlowExecutor flowExecutor, String componentId, Message<?> message) {
             this.flowExecutor = flowExecutor;
             this.componentId = componentId;
             this.message = message;
