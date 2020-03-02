@@ -20,13 +20,13 @@ import java.util.List;
  */
 public class EventContext {
 
-    private static List<EventListener> list = new ArrayList<EventListener>();
+    private static List<MalaccaEventListener> list = new ArrayList<MalaccaEventListener>();
 
     /**
      * 添加 监听器
      * @param listener
      */
-    public static void addListener(EventListener listener) {
+    public static void addListener(MalaccaEventListener listener) {
         list.add(listener);
     }
 
@@ -34,12 +34,12 @@ public class EventContext {
      * 移除监听器
      * @param listener
      */
-    public static void removeListener(EventListener listener) {
+    public static void removeListener(MalaccaEventListener listener) {
         list.remove(listener);
     }
 
     public static synchronized void dispatch(Event event) {
-        for (EventListener listener : list) {
+        for (MalaccaEventListener listener : list) {
             try {
                 listener.onEvent(event);
             } catch (Exception e) {

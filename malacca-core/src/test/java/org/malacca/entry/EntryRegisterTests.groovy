@@ -1,4 +1,4 @@
-package org.malacca.flow
+package org.malacca.entry
 
 import org.malacca.entry.HttpEntry
 import org.malacca.entry.holder.HttpEntryHolder

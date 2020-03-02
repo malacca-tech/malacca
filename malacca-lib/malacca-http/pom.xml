@@ -2,25 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>malacca-lib</artifactId>
+        <groupId>org.malacca</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.malacca</groupId>
-    <artifactId>malacca-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <artifactId>malacca-http</artifactId>
 
     <dependencies>
-        <!-- yml解析依赖-->
-        <!-- https://mvnrepository.com/artifact/com.esotericsoftware.yamlbeans/yamlbeans -->
-        <dependency>
-            <groupId>com.esotericsoftware.yamlbeans</groupId>
-            <artifactId>yamlbeans</artifactId>
-            <version>1.13</version>
-        </dependency>
-
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
@@ -37,37 +28,12 @@
             <artifactId>hutool-all</artifactId>
             <version>5.1.4</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
-        </dependency>
-
-        <!--json工具-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.62</version>
-        </dependency>
-
-        <!--XML-->
-        <dependency>
-            <groupId>jaxen</groupId>
-            <artifactId>jaxen</artifactId>
-            <version>1.1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
+                <!--                <groupId>org.apache.maven.plugins</groupId>-->
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>8</source>
@@ -157,7 +123,6 @@
                     <failsOnError>false</failsOnError>
                     <printFailingErrors>true</printFailingErrors>
                     <rulesets>
-<!--                        <ruleset>rulesets/java/ali-comment.xml</ruleset>-->
                         <ruleset>rulesets/java/ali-concurrent.xml</ruleset>
                         <ruleset>rulesets/java/ali-constant.xml</ruleset>
                         <ruleset>rulesets/java/ali-exception.xml</ruleset>
@@ -187,5 +152,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

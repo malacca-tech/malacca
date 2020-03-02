@@ -1,7 +1,6 @@
 package org.malacca.entry.holder;
 
 import org.malacca.entry.Poller;
-import org.malacca.entry.holder.EntryHolder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,11 +19,11 @@ import java.util.Map;
  * Department :
  * </p>
  */
-public abstract class PollerEntryHolder implements EntryHolder<Poller> {
+public abstract class AbstractPollerEntryHolder implements EntryHolder<Poller> {
     /**
      * http Entry缓存
      */
-    private Map<String, Poller> PollerEntryMap;
+    private Map<String, Poller> pollerEntryMap;
 
     @Override
     public void loadEntry(String id, Poller entry) {
@@ -37,9 +36,9 @@ public abstract class PollerEntryHolder implements EntryHolder<Poller> {
     public abstract void loadPollerEntry();
 
     public Map<String, Poller> getHttpEntryMap() {
-        if (PollerEntryMap == null) {
-            this.PollerEntryMap = new HashMap<>();
+        if (pollerEntryMap == null) {
+            this.pollerEntryMap = new HashMap<>(16);
         }
-        return this.PollerEntryMap;
+        return this.pollerEntryMap;
     }
 }

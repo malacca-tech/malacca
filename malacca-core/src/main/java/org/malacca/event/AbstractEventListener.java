@@ -21,13 +21,15 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Department :
  * </p>
  */
-public abstract class AbstractEventListener implements EventListener, Runnable {
+public abstract class AbstractEventListener implements MalaccaEventListener, Runnable {
 
     private Thread thread;
 
     private BlockingQueue<Event> queue;
 
     private String queueName;
+
+    private static final Integer BACH_SIZE = 10000;
 
     public AbstractEventListener(String queueName) {
         queue = new LinkedBlockingQueue<>(400000);
@@ -67,12 +69,11 @@ public abstract class AbstractEventListener implements EventListener, Runnable {
     }
 
     private void processQueue() throws InterruptedException {
-        long beginTime = System.currentTimeMillis();
         List<Event> eventList = new ArrayList<>();
-        int size = queue.size();
+        int size = queue == null ? 0 : queue.size();
         int batchSize = size;
-        if (size >= 10000) {
-            batchSize = 10000;
+        if (size >= BACH_SIZE) {
+            batchSize = BACH_SIZE;
         }
         for (int i = batchSize; i > 0; i--) {
             Event event = queue.take();

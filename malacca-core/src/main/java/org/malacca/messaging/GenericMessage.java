@@ -1,6 +1,8 @@
 package org.malacca.messaging;
 
-import com.sun.tools.javac.util.Assert;
+
+
+import cn.hutool.core.lang.Assert;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -15,8 +17,8 @@ public class GenericMessage<T> implements Message<T>, Serializable {
     }
 
     public GenericMessage(T payload, Map<String, Object> context) {
-        Assert.checkNonNull(payload, "Payload must not be null");
-        Assert.checkNonNull(context, "MessageHeaders must not be null");
+        Assert.notNull(payload, "Payload must not be null");
+        Assert.notNull(context, "MessageHeaders must not be null");
         this.payload = payload;
         this.context = context;
     }

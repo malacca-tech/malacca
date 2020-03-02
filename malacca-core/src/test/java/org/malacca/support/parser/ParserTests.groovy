@@ -1,4 +1,4 @@
-package org.malacca.flow
+package org.malacca.support.parser
 
 import com.alibaba.fastjson.JSONObject
 import org.malacca.component.Component
@@ -8,8 +8,6 @@ import org.malacca.definition.EntryDefinition
 import org.malacca.entry.Entry
 import org.malacca.entry.HttpEntry
 import org.malacca.support.ClassNameParserFactory
-import org.malacca.support.parser.HttpInputParser
-import org.malacca.support.parser.HttpOutputParser
 import spock.lang.Specification
 
 /**
@@ -42,7 +40,6 @@ class ParserTests extends Specification {
         type   | clazz           | result1 | resul2
         'http' | Entry.class     | false   | true
         'http' | Component.class | true    | false
-        'soap' | Entry.class     | false   | false
     }
 
     def "获取入口组件实例"() {
@@ -63,17 +60,17 @@ class ParserTests extends Specification {
 
         expect: "开始校验结果"
 
-        assert instance.name == result1
-        assert instance.status == result2
-        assert instance.id == result3
-        assert instance.type == result4
-        assert instance.method == result5
-        assert instance.uri == result6
+        assert instance.name == nameResullt
+        assert instance.status == statusResult
+        assert instance.id == idResult
+        assert instance.type == typeResult
+        assert instance.method == methodResult
+        assert instance.uri == uriResult
 
         where: "开始"
-        type   | clazz       | entryid | status | name      | key1     | value1 | key2  | value2        | result1   | result2 | result3 | result4     | result5 | result6
-        'http' | Entry.class | 'http1' | true   | 'http输入'  | 'method' | 'GET'  | 'uri' | '/path/test'  | 'http输入'  | true    | 'http1' | 'httpEntry' | 'GET'   | '/path/test'
-        'http' | Entry.class | 'http2' | false  | 'http输入2' | 'method' | 'GET1' | 'uri' | '/path/test1' | 'http输入2' | false   | 'http2' | 'httpEntry' | 'GET1'  | '/path/test1'
+        type   | clazz       | entryid | status | name      | key1     | value1 | key2  | value2        | nameResullt | statusResult | idResult | typeResult  | methodResult | uriResult
+        'http' | Entry.class | 'http1' | true   | 'http输入'  | 'method' | 'GET'  | 'uri' | '/path/test'  | 'http输入'    | true         | 'http1'  | 'httpEntry' | 'GET'        | '/path/test'
+        'http' | Entry.class | 'http2' | false  | 'http输入2' | 'method' | 'GET1' | 'uri' | '/path/test1' | 'http输入2'   | false        | 'http2'  | 'httpEntry' | 'GET1'       | '/path/test1'
     }
 
     def "获取业务组件实例"() {

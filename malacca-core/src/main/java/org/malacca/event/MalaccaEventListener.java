@@ -1,5 +1,7 @@
 package org.malacca.event;
 
+import java.util.EventListener;
+
 /**
  * <p>
  * Title :
@@ -14,7 +16,7 @@ package org.malacca.event;
  * Department :
  * </p>
  */
-public interface EventListener extends java.util.EventListener {
+public interface MalaccaEventListener extends EventListener {
     /**
      * 处理事件
      *

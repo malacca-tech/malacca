@@ -75,8 +75,8 @@ public class ClassNameParserFactory implements ParserFactory {
     }
 
     protected void initTypeAlias() {
-        entryTypeAlias = new HashMap<>();
-        componentTypeAlias = new HashMap<>();
+        entryTypeAlias = new HashMap<>(16);
+        componentTypeAlias = new HashMap<>(16);
         //tood 这里只是一个demo，后期需要从classpath的META-INF的配置文件里面获取这个映射关系
         entryTypeAlias.put("http", HttpInputParser.class.getName());
         componentTypeAlias.put("http", HttpOutputParser.class.getName());

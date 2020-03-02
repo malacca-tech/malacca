@@ -1,4 +1,4 @@
-package org.malacca.exector;
+package org.malacca.executor;
 
 import org.malacca.component.Component;
 import org.malacca.flow.Flow;
@@ -78,7 +78,7 @@ public class DefaultFlowExecutor implements Executor {
         return this.execute(componentId, handleMessage);
     }
 
-    public class FlowExecutorRunner implements Runnable {
+    public static class FlowExecutorRunner implements Runnable {
 
         private DefaultFlowExecutor flowExecutor;
 

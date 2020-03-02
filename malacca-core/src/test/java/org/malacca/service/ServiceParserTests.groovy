@@ -1,9 +1,9 @@
-package org.malacca.flow
+package org.malacca.service
 
 
 import org.malacca.entry.HttpEntry
 import org.malacca.entry.register.DefaultEntryRegister
-import org.malacca.service.DefaultServiceManager
+import org.malacca.flow.DefaultFlow
 import org.malacca.support.MessageBuilder
 import spock.lang.Specification
 
@@ -48,7 +48,7 @@ class ServiceParserTests extends Specification {
         assert component.type == componentType
         assert entry.type == entryType
         assert entry.id == entryId
-        assert entry instanceof HttpEntry == classType
+        assert classType.isAssignableFrom(entry.getClass())
         assert elements.size() == elementsSize
         assert elements.get(size).sufComponentId == sufComponentId
         assert elements.get(size).preComponentId == preComponentId
@@ -56,11 +56,11 @@ class ServiceParserTests extends Specification {
         assert elements.get(size).type.synchronized == isSynchronized
 
         where: "开始校验"
-        fileName   | serviceId | componentId | entryId      | flowComponentId | componentMapSize | entryMapSize | componentType | entryType   | classType | elementsSize | size | sufComponentId | preComponentId | exceptionType | isSynchronized
-        'demo.yml' | 'A001'    | 'soapOut1'  | 'component1' | 'component1'    | 2                | 2            | 'httpOut'     | 'httpEntry' | true      | 2            | 0    | 'soapOut1'     | 'component1'   | false         | false
-        'demo.yml' | 'A001'    | 'soapOut1'  | 'component1' | 'component1'    | 2                | 2            | 'httpOut'     | 'httpEntry' | true      | 2            | 1    | 'soapOut2'     | 'component1'   | false         | true
-        'demo.yml' | 'A001'    | 'soapOut1'  | 'component1' | 'soapOut1'      | 2                | 2            | 'httpOut'     | 'httpEntry' | true      | 1            | 0    | 'soapOut2'     | 'soapOut1'     | false         | true
-        'demo.yml' | 'A001'    | 'soapOut2'  | 'component2' | 'component2'    | 2                | 2            | 'httpOut'     | 'httpEntry' | true      | 2            | 0    | 'soapOut1'     | 'component2'   | false         | true
-        'demo.yml' | 'A001'    | 'soapOut2'  | 'component2' | 'component2'    | 2                | 2            | 'httpOut'     | 'httpEntry' | true      | 2            | 1    | 'soapOut2'     | 'component2'   | true          | true
+        fileName   | serviceId | componentId | entryId      | flowComponentId | componentMapSize | entryMapSize | componentType | entryType   | classType       | elementsSize | size | sufComponentId | preComponentId | exceptionType | isSynchronized
+        'demo.yml' | 'A001'    | 'soapOut1'  | 'component1' | 'component1'    | 2                | 2            | 'httpOut'     | 'httpEntry' | HttpEntry.class | 2            | 0    | 'soapOut1'     | 'component1'   | false         | false
+        'demo.yml' | 'A001'    | 'soapOut1'  | 'component1' | 'component1'    | 2                | 2            | 'httpOut'     | 'httpEntry' | HttpEntry.class | 2            | 1    | 'soapOut2'     | 'component1'   | false         | true
+        'demo.yml' | 'A001'    | 'soapOut1'  | 'component1' | 'soapOut1'      | 2                | 2            | 'httpOut'     | 'httpEntry' | HttpEntry.class | 1            | 0    | 'soapOut2'     | 'soapOut1'     | false         | true
+        'demo.yml' | 'A001'    | 'soapOut2'  | 'component2' | 'component2'    | 2                | 2            | 'httpOut'     | 'httpEntry' | HttpEntry.class | 2            | 0    | 'soapOut1'     | 'component2'   | false         | true
+        'demo.yml' | 'A001'    | 'soapOut2'  | 'component2' | 'component2'    | 2                | 2            | 'httpOut'     | 'httpEntry' | HttpEntry.class | 2            | 1    | 'soapOut2'     | 'component2'   | true          | true
     }
 }

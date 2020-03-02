@@ -38,7 +38,7 @@ public class HttpEntryHolder extends AbstractEntryHolder<Entry> {
 
     public Map<String, Entry> getHttpEntryMap() {
         if (httpEntryMap == null) {
-            this.httpEntryMap = new HashMap<>();
+            this.httpEntryMap = new HashMap<>(16);
         }
         return this.httpEntryMap;
     }

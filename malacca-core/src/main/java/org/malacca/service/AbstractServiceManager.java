@@ -7,8 +7,8 @@ import org.malacca.definition.ServiceDefinition;
 import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.exception.ServiceLoadException;
-import org.malacca.exector.Executor;
-import org.malacca.exector.DefaultFlowExecutor;
+import org.malacca.executor.Executor;
+import org.malacca.executor.DefaultFlowExecutor;
 import org.malacca.flow.Flow;
 import org.malacca.flow.FlowBuilder;
 import org.malacca.messaging.Message;
@@ -171,7 +171,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     public Map<String, Service> getServiceMap() {
         if (this.serviceMap == null) {
-            this.serviceMap = new HashMap<>();
+            this.serviceMap = new HashMap<>(16);
         }
         return serviceMap;
     }

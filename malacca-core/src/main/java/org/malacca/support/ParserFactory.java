@@ -23,5 +23,5 @@ public interface ParserFactory<T> {
      * @param type
      * @return
      */
-    Parser<T, ?> getParser(String type, Class T);
+    Parser<T, ?> getParser(String type, Class t);
 }
