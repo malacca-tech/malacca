@@ -19,7 +19,7 @@ public abstract class AbstractServiceProvider implements ServiceProvider {
     private ServiceManager serviceManager;
 
     // TODO: 2020/2/20 初始化时调用
-    protected abstract String findYml();
+    protected abstract void init();
 
     public ServiceManager getServiceManager() {
         return serviceManager;

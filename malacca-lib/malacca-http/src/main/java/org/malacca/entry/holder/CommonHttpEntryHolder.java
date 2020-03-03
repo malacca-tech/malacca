@@ -15,11 +15,10 @@ import org.malacca.support.MessageBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.net.URLDecoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,14 +37,15 @@ import java.util.stream.Stream;
  * </p>
  */
 // TODO: 2020/3/2 多线程
-public class HttpEntryHolder extends AbstractEntryHolder<Entry> implements HttpHandler {
+public class CommonHttpEntryHolder extends AbstractEntryHolder<Entry> implements HttpHandler {
     /**
      * http Entry缓存
      */
     private Map<String, CommonHttpEntry> httpEntryMap;
 
     // TODO: 2020/3/2 初始化有待考证
-    private Map<String, HttpServer> httpServerMap = new HashMap<>();
+    //port -(id,HttpServer)
+    private Map<Integer, Map<String, HttpServer>> httpServerMap = new HashMap<>();
 
     public static final String GET_METHOD = "GET";
 
@@ -68,7 +68,6 @@ public class HttpEntryHolder extends AbstractEntryHolder<Entry> implements HttpH
         } else {
             // TODO: 2020/3/2 异常  UnSupportEntryTypeException
         }
-
     }
 
     /**
@@ -78,36 +77,28 @@ public class HttpEntryHolder extends AbstractEntryHolder<Entry> implements HttpH
      */
     private void exposeHttpEntry(CommonHttpEntry entry) throws IOException {
         // TODO: 2020/3/2 日志
-        HttpServerProvider provider = HttpServerProvider.provider();
-        HttpServer httpserver = provider.createHttpServer(new InetSocketAddress(entry.getPort()), REQUEST_NUM);
-        httpserver.createContext(entry.getUri(), this::handle);
-        httpserver.setExecutor(null);
-        httpserver.start();
-        httpServerMap.put(entry.getId(), httpserver);
+        HttpServer httpServer = getHttpServer(entry.getPort());
+        if (httpServer != null) {
+            httpServer.createContext(entry.getUri(), this::handle);
+        } else {
+            HttpServerProvider provider = HttpServerProvider.provider();
+            httpServer = provider.createHttpServer(new InetSocketAddress(entry.getPort()), REQUEST_NUM);
+            httpServer.createContext(entry.getUri(), this::handle);
+            httpServer.setExecutor(null);
+            httpServer.start();
+        }
+        putHttpServerMap(entry, httpServer);
     }
 
     @Override
     public void unloadEntry(String id, Entry entry) {
-        HttpServer httpServer = httpServerMap.get(entry.getId());
+        HttpServer httpServer = getHttpServer(((CommonHttpEntry) entry).getPort());
         if (httpServer != null) {
-            httpServer.stop(REQUEST_NUM);
+            httpServer.removeContext(((CommonHttpEntry) entry).getUri());
         }
-        getHttpEntryMap().remove(id, entry);
-    }
-
-    public Map<String, CommonHttpEntry> getHttpEntryMap() {
-        if (httpEntryMap == null) {
-            this.httpEntryMap = new HashMap<>(16);
-        }
-        return this.httpEntryMap;
-    }
-
-    public Map<String, HttpServer> getHttpServerMap() {
-        return httpServerMap;
-    }
-
-    public void setHttpServerMap(Map<String, HttpServer> httpServerMap) {
-        this.httpServerMap = httpServerMap;
+        // TODO: 2020/3/3 判断是不是没有context了
+//        httpServer.stop(REQUEST_NUM);
+        removeHttpServer(entry);
     }
 
     @Override
@@ -169,4 +160,38 @@ public class HttpEntryHolder extends AbstractEntryHolder<Entry> implements HttpH
         return null;
     }
 
+    public Map<String, CommonHttpEntry> getHttpEntryMap() {
+        if (httpEntryMap == null) {
+            this.httpEntryMap = new HashMap<>(16);
+        }
+        return this.httpEntryMap;
+    }
+
+    public void putHttpServerMap(CommonHttpEntry entry, HttpServer server) {
+
+        Map<String, HttpServer> serverMap = httpServerMap.get(entry.getPort());
+        if (serverMap != null) {
+            serverMap.put(entry.getId(), server);
+        } else {
+            serverMap = new HashMap<>();
+            serverMap.put(entry.getId(), server);
+            httpServerMap.put(entry.getPort(), serverMap);
+        }
+    }
+
+    public HttpServer getHttpServer(int port) {
+        Map<String, HttpServer> serverMap = httpServerMap.get(port);
+        if (serverMap != null && serverMap.size() > 0) {
+            return (HttpServer) serverMap.values().toArray()[0];
+        } else {
+            return null;
+        }
+    }
+
+    private void removeHttpServer(Entry entry) {
+        Map<String, HttpServer> serverMap = httpServerMap.get(((CommonHttpEntry) entry).getPort());
+        if (serverMap != null && serverMap.size() > 0) {
+            serverMap.remove(entry.getId());
+        }
+    }
 }

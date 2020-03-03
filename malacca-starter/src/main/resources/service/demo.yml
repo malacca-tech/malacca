@@ -1,0 +1,75 @@
+# 此yml 为基础描述esb服务文档，包含 serviceId,namespace,version,dispalyName,description,entries,components,flow 属性
+# 此配置 模板 应满足不依赖第三方 而独立解析成业务
+# 服务唯一标识
+serviceId: A001
+# 分组
+namespace: default
+# 版本覆盖关系，不同版本， 版本冲突解决
+version: v1.0.0
+# 服务名
+displayName:
+# 描述
+description:
+# 入口
+entries:
+  # 内部组件  默认 type  企业版组件 另外种格式区分 eg: org.malacca.http
+  - type: http
+    # 组件id  用于流程 控制
+    id: component1
+    # 入口 展示名称
+    name: HIS # 应用方
+    # 服务 状态
+    status: true
+    #组件特有参数
+    params:
+      # http 映射路径 创建实例 handlerMapping 处理映射
+      uri: /path/test1
+      method: GET
+      port: 8888
+      payloadExpression: payload
+    # 环境变量 key-value
+    env:
+      # key value 形式 塞到commponent
+      key1: value1
+      key2: value3
+  - type: http
+    # 组件id  用于流程 控制
+    id: component2
+    # 入口 展示名称
+    name:
+    # 服务 状态
+    status: false
+    #组件特有参数
+    params:
+      uri: /path/test2
+      method: GET
+      port: 8888
+      payloadExpression: payload
+# 组件 包括 中间的数据业务组件 以及 输出组件
+components:
+  # webservice
+  - type: http
+    # 组件id
+    id: soapOut1
+    #组件name
+    name: 数据上报
+    #组件是否启用
+    status: true
+    #组件内部属性
+    params:
+      method: get
+      url: http://www.baidu.com
+      timeout: 10000
+      headers:
+        ss: ss
+        yy: yy
+      parameters:
+      mediaType: application/json
+    #组件环境变量 key-value 键值对
+    env:
+      key1: value1
+      key2: value3
+  # 流程 start 开始 stop结束 用于描述业务流程关系
+flow: |
+  component1 --> soapOut1
+  component2 --> soapOut1

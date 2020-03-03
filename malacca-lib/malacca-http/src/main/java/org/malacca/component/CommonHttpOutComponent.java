@@ -1,10 +1,12 @@
 package org.malacca.component;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.http.HttpRequest;
 import org.malacca.exception.MessagingException;
 import org.malacca.messaging.Message;
 import org.malacca.support.MessageBuilder;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 

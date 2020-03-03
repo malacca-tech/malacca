@@ -49,8 +49,8 @@ public class CommonHttpEntry extends AbstractEntry {
     public Message handleMessage(Message<?> message) {
         // TODO: 2020/2/24 统一入口 组件消息 ，然后调用此方法 然后 获取下一个 组件 发出去
         Message<String> stringMessage = MessageBuilder.withPayload("1").build();
-//        Message<?> resultMessage = getFlowExecutor().execute(getId(), stringMessage);
-        return stringMessage;
+        Message<?> resultMessage = getFlowExecutor().execute(getId(), stringMessage);
+        return resultMessage;
     }
 
     @Override

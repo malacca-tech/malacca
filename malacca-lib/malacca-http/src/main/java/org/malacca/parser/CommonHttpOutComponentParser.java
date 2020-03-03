@@ -76,10 +76,13 @@ public class CommonHttpOutComponentParser implements ComponentParser {
         Assert.isInstanceOf(String.class, method, "this method is not a string!");
         String methodStr = (String) method;
         Assert.notBlank(methodStr, "method cannot be blank");
-        component.setMediaType(methodStr);
+        component.setMethod(methodStr);
     }
 
     private void setHeaders(CommonHttpOutComponent component, Object headers) {
+        if (headers == null) {
+            return;
+        }
         if (Map.class.isAssignableFrom(headers.getClass())) {
             component.setHeaders((Map<String, String>) headers);
         } else if (StrUtil.isBlank(String.valueOf(headers))) {
@@ -90,6 +93,9 @@ public class CommonHttpOutComponentParser implements ComponentParser {
     }
 
     private void setParameters(CommonHttpOutComponent component, Object params) {
+        if (params == null) {
+            return;
+        }
         if (Map.class.isAssignableFrom(params.getClass())) {
             component.setParameters((Map<String, Object>) params);
         } else if (StrUtil.isBlank(String.valueOf(params))) {

@@ -33,6 +33,10 @@ public class ClassNameParserFactory implements ParserFactory {
 
     Map<String, String> componentTypeAlias;
 
+    public String componentParserFactoryPath;
+
+    public String entryParserFactoryPath;
+
     public ClassNameParserFactory() {
         initTypeAlias();
     }
@@ -78,8 +82,17 @@ public class ClassNameParserFactory implements ParserFactory {
         entryTypeAlias = new HashMap<>(16);
         componentTypeAlias = new HashMap<>(16);
         //tood 这里只是一个demo，后期需要从classpath的META-INF的配置文件里面获取这个映射关系
+
         entryTypeAlias.put("http", HttpInputParser.class.getName());
         componentTypeAlias.put("http", HttpOutputParser.class.getName());
+    }
+
+    public void setTypeAlia(String type, String parserClassName, String componentType) {
+        if ("entry".equals(componentType)) {
+            entryTypeAlias.put(type, parserClassName);
+        } else {
+            componentTypeAlias.put(type, parserClassName);
+        }
     }
 
     /**
