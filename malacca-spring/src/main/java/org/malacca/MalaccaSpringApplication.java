@@ -18,7 +18,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * </p>
  */
 @SpringBootApplication
-@EnableMalaccaManager
 public class MalaccaSpringApplication {
     public static void main(String[] args) {
         SpringApplication.run(MalaccaSpringApplication.class, args);
