@@ -1,4 +1,4 @@
-package org.malacca.event.system;
+package org.malacca.event.entity.system;
 
 import org.malacca.event.Event;
 

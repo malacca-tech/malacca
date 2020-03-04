@@ -43,17 +43,17 @@ public abstract class AbstractServiceManager implements ServiceManager {
     /**
      * entry 注册器 应该是注册进来
      */
-    private EntryRegister entryRegister;
+    protected EntryRegister entryRegister;
 
     /**
      * 服务缓存
      */
-    private Map<String, Service> serviceMap;
+    protected Map<String, Service> serviceMap;
 
     /**
      * 线程池
      */
-    private ThreadPoolExecutor threadExecutor;
+    protected ThreadPoolExecutor threadExecutor;
 
     /**
      * 用于给Service获取翻译definition的工厂类
@@ -69,6 +69,9 @@ public abstract class AbstractServiceManager implements ServiceManager {
      * 流程执行器
      */
     protected Executor executor;
+
+    public AbstractServiceManager() {
+    }
 
     protected AbstractServiceManager(EntryRegister entryRegister, ParserFactory parserFactory, FlowBuilder flowBuilder) {
         this.entryRegister = entryRegister;
@@ -156,7 +159,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
     }
 
     // TODO: 2020/2/21 yml 实体类
-    private Service buildServiceInstance(ServiceDefinition definition) {
+    protected Service buildServiceInstance(ServiceDefinition definition) {
         DefaultService defaultService = new DefaultService();
         defaultService.setServiceId(definition.getServiceId());
         defaultService.setNamespace(definition.getNamespace());
@@ -176,7 +179,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
         return serviceMap;
     }
 
-    private void initFlowExecutor(Service service, Flow flow) {
+    protected void initFlowExecutor(Service service, Flow flow) {
         executor.setComponentMap(service.getComponentMap());
         executor.setFlow(flow);
         executor.setPoolExecutor(threadExecutor);

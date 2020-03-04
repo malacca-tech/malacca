@@ -9,6 +9,7 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.spi.HttpServerProvider;
 import org.malacca.entry.CommonHttpEntry;
 import org.malacca.entry.Entry;
+import org.malacca.exception.ServiceLoadException;
 import org.malacca.messaging.Message;
 import org.malacca.support.MessageBuilder;
 
@@ -61,12 +62,11 @@ public class CommonHttpEntryHolder extends AbstractEntryHolder<Entry> implements
             try {
                 exposeHttpEntry((CommonHttpEntry) entry);
             } catch (IOException e) {
-                e.printStackTrace();
-                // TODO: 2020/3/2
+                throw new ServiceLoadException("Http服务入口注册失败", e);
             }
             getHttpEntryMap().put(id, (CommonHttpEntry) entry);
         } else {
-            // TODO: 2020/3/2 异常  UnSupportEntryTypeException
+            throw new ServiceLoadException("Http入口不是CommonHttpEntry.class 类型");
         }
     }
 

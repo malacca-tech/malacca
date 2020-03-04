@@ -3,11 +3,17 @@ package org.malacca.service;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import org.malacca.exception.ServiceLoadException;
+import org.malacca.exception.constant.SystemExceptionCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.Resource;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Scanner;
 
 /**
  * <p>
@@ -23,24 +29,33 @@ import java.util.Scanner;
  * Department :
  * </p>
  */
-public class FileServiceProvider extends AbstractServiceProvider {
+public class FileServiceProvider extends AbstractServiceProvider implements InitializingBean {
 
+    public static final Logger LOG = LoggerFactory.getLogger(FileServiceProvider.class);
+
+    @Value("${malacca.class-path}")
     private String path;
 
     @Override
     public void init() {
         if (StrUtil.isNullOrUndefined(path)) {
-            Assert.state(true,"未配置class-path");
+            Assert.state(true, "未配置class-path");
             return;
         }
+        LOG.info("开始读取{}路径下的服务配置文件", path);
         URL resource = FileServiceProvider.class.getClassLoader().getResource(path);
         String path = resource.getPath();
         File file = FileUtil.file(path);
-        if (FileUtil.isDirectory(file)) {
-            readFile(file.listFiles());
-        } else {
-            String yml = FileUtil.readString(file, "UTF-8");
-            getServiceManager().loadService(yml);
+        try {
+            if (FileUtil.isDirectory(file)) {
+                readFile(file.listFiles());
+            } else {
+                String yml = FileUtil.readString(file, "UTF-8");
+                getServiceManager().loadService(yml);
+            }
+        } catch (Exception e) {
+            LOG.error("{}服务配置文件异常", path, e);
+            throw new ServiceLoadException(SystemExceptionCode.MALACCA_100007_FILE_READ_ERROR, "读取文件" + path + "失败", e);
         }
     }
 
@@ -59,7 +74,6 @@ public class FileServiceProvider extends AbstractServiceProvider {
         }
         for (File f : files) {
             if (f.isFile()) {
-                // TODO: 2020/3/3 判断yml格式
                 String yml = FileUtil.readString(f, "UTF-8");
                 getServiceManager().loadService(yml);
             } else if (f.isDirectory()) {
@@ -68,4 +82,8 @@ public class FileServiceProvider extends AbstractServiceProvider {
         }
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        init();
+    }
 }

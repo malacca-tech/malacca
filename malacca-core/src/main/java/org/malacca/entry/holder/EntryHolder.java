@@ -1,5 +1,7 @@
 package org.malacca.entry.holder;
 
+import org.malacca.exception.ServiceLoadException;
+
 /**
  * <p>
  * Title :
@@ -23,7 +25,7 @@ public interface EntryHolder<T> {
      * @param entry httpEntry soapEntry poller
      * @return
      */
-    void loadEntry(String id, T entry);
+    void loadEntry(String id, T entry) throws ServiceLoadException;
 
     /**
      * 卸载入口

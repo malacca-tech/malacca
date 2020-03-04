@@ -1,9 +1,7 @@
-package org.malacca.event.service;
+package org.malacca.event.entity.service;
 
 import org.malacca.event.Event;
-import org.malacca.messaging.Message;
 
-import java.util.Date;
 import java.util.Map;
 
 /**

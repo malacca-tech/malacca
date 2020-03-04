@@ -21,4 +21,6 @@ public interface Poller extends Entry {
      * @return
      */
     String getCron();
+
+    void setCron(String cron);
 }
