@@ -42,7 +42,7 @@ public class SqlEntry extends AbstractPollingEntry {
 
     private DataSource dataSource;
 
-    protected SqlEntry(String id, String name) {
+    public SqlEntry(String id, String name) {
         super(id, name);
     }
 
@@ -55,8 +55,6 @@ public class SqlEntry extends AbstractPollingEntry {
 
     private void queryAndPublish(String sql, JdbcTemplate jdbcTemplate) {
         jdbcTemplate.query(sql, resultSet -> {
-            //查出es中的集成流MD5值 缓存到ehcache
-            //逐条对比数据，es中不存在的发出去，记录此行md5值，批量插入
             RowCallbackHandler rowCallback = new RowCallback();
             while (resultSet.next()) {
                 rowCallback.processRow(resultSet);
