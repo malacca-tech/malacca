@@ -26,14 +26,14 @@ public abstract class AbstractPollerEntryHolder implements EntryHolder<Poller> {
     private Map<String, Poller> pollerEntryMap;
 
     @Override
-    public void loadEntry(String id, Poller entry){
+    public void loadEntry(String id, Poller entry) {
         getHttpEntryMap().put(id, entry);
     }
 
-    /**
-     * 初始化时加载所有的数据库轮询 并生成定时任务
-     */
-    public abstract void loadPollerEntry();
+    @Override
+    public void unloadEntry(String id, Poller entry) {
+        getHttpEntryMap().remove(id, entry);
+    }
 
     public Map<String, Poller> getHttpEntryMap() {
         if (pollerEntryMap == null) {

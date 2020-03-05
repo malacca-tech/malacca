@@ -2,11 +2,14 @@ package org.malacca.entry.register;
 
 import org.malacca.entry.Entry;
 import org.malacca.entry.holder.EntryHolder;
+import org.malacca.entry.holder.PollerEntryHolder;
 import org.malacca.exception.ServiceLoadException;
 import org.malacca.exception.constant.SystemExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -22,9 +25,13 @@ import org.springframework.beans.factory.InitializingBean;
  * Department :
  * </p>
  */
+@Component
 public class SpringEntryRegister extends AbstractEntryRegister implements InitializingBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(SpringEntryRegister.class);
+
+    @Autowired
+    private PollerEntryHolder pollerEntryHolder;
 
     @Override
     public void registerEntry(Entry entry) {
@@ -63,6 +70,6 @@ public class SpringEntryRegister extends AbstractEntryRegister implements Initia
     @Override
     public void afterPropertiesSet() throws Exception {
         // TODO: 2020/3/4 初始化holder
-
+        putHolder("pollerEntry", pollerEntryHolder);
     }
 }

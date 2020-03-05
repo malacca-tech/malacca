@@ -76,6 +76,6 @@ public class SqlOutComponentParser implements ComponentParser {
         Assert.isInstanceOf(String.class, sql, "the sql is not a string!");
         String sqlStr = (String) sql;
         Assert.notBlank(sqlStr, "sql cannot be blank");
-        component.setUrl(sqlStr);
+        component.setSql(sqlStr);
     }
 }

@@ -28,7 +28,7 @@ import java.sql.SQLException;
  * Department :
  * </p>
  */
-public class SqlEntry extends AbstractPollingEntry {
+public class SqlPollerEntry extends AbstractPollingEntry {
 
     private String driverClassName;
 
@@ -42,7 +42,9 @@ public class SqlEntry extends AbstractPollingEntry {
 
     private DataSource dataSource;
 
-    public SqlEntry(String id, String name) {
+    private static final String TYPE = "pollerEntry";
+
+    public SqlPollerEntry(String id, String name) {
         super(id, name);
     }
 
@@ -75,7 +77,7 @@ public class SqlEntry extends AbstractPollingEntry {
 
     @Override
     public String getType() {
-        return null;
+        return TYPE;
     }
 
     private DataSource getDataSource() {

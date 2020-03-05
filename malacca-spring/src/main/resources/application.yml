@@ -1,2 +1,2 @@
 malacca:
-  class-path: demo.yml
+  class-path: poller.yml

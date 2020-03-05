@@ -8,10 +8,10 @@ import org.malacca.exception.constant.SystemExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 
@@ -29,12 +29,17 @@ import java.net.URL;
  * Department :
  * </p>
  */
+@Component
 public class FileServiceProvider extends AbstractServiceProvider implements InitializingBean {
 
     public static final Logger LOG = LoggerFactory.getLogger(FileServiceProvider.class);
 
     @Value("${malacca.class-path}")
     private String path;
+
+    public FileServiceProvider(SpringServiceManager springServiceManager) {
+        this.setServiceManager(springServiceManager);
+    }
 
     @Override
     public void init() {

@@ -1,9 +1,12 @@
 package org.malacca.service;
 
+import org.malacca.entry.holder.PollerEntryHolder;
 import org.malacca.entry.register.SpringEntryRegister;
 import org.malacca.event.entity.system.ServiceLoadFailedEvent;
 import org.malacca.executor.DefaultFlowExecutor;
 import org.malacca.flow.FlowElement;
+import org.malacca.parser.SqlEntryParser;
+import org.malacca.parser.SqlOutComponentParser;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.malacca.component.Component;
@@ -50,9 +53,13 @@ import java.util.concurrent.TimeUnit;
  * Department :
  * </p>
  */
+@org.springframework.stereotype.Component
 public class SpringServiceManager extends AbstractServiceManager implements InitializingBean, DisposableBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(SpringServiceManager.class);
+
+    @Autowired
+    SpringEntryRegister springEntryRegister;
 
     @Autowired
     ApplicationContext context;
@@ -86,8 +93,9 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
                         Parser<Entry, EntryDefinition> parser = parserFactory.getParser(entryDefinition.getType(), Entry.class);
                         Entry entry = parser.createInstance(entryDefinition);
                         entry.setFlowExecutor(executor);//执行器注入到entry
-                        service.addEntry(entry);
+                        entry.setEntryKey();
                         entryRegister.registerEntry(entry);
+                        service.addEntry(entry);
                     } catch (ServiceLoadException e) {
                         context.publishEvent(new ServiceLoadFailedEvent(context, service));
                         throw e;
@@ -148,11 +156,17 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
     @Override
     public void afterPropertiesSet() throws Exception {
         if (entryRegister == null) {
-            entryRegister = new SpringEntryRegister();
+//            SpringEntryRegister entryRegister = new SpringEntryRegister();
+//            entryRegister.afterPropertiesSet();
+            this.entryRegister = springEntryRegister;
+
         }
 
         if (parserFactory == null) {
-            parserFactory = new ClassNameParserFactory();
+            ClassNameParserFactory classNameParserFactory = new ClassNameParserFactory();
+            classNameParserFactory.setTypeAlia("poller", SqlEntryParser.class.getName(), "entry");
+            classNameParserFactory.setTypeAlia("poller", SqlOutComponentParser.class.getName(), "component");
+            parserFactory = classNameParserFactory;
         }
 
         if (flowBuilder == null) {

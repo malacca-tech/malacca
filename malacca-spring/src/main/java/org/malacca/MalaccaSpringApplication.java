@@ -2,6 +2,7 @@ package org.malacca;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
  * <p>
@@ -17,7 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Department :
  * </p>
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class MalaccaSpringApplication {
     public static void main(String[] args) {
         SpringApplication.run(MalaccaSpringApplication.class, args);
