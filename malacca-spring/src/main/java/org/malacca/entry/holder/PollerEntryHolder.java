@@ -1,9 +1,12 @@
 package org.malacca.entry.holder;
 
 import org.malacca.entry.Poller;
+import org.malacca.entry.register.SpringEntryRegister;
 import org.quartz.*;
 import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
@@ -32,6 +35,8 @@ import java.util.List;
 @Component
 public class PollerEntryHolder extends AbstractPollerEntryHolder {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PollerEntryHolder.class);
+
     @Autowired
     private SchedulerFactoryBean factoryBean;
 
@@ -44,9 +49,11 @@ public class PollerEntryHolder extends AbstractPollerEntryHolder {
 
     @Override
     public void loadEntry(String id, Poller entry) {
+        LOG.info("注册轮询任务:{},表达式为:{}", id, entry.getCron());
         try {
             register(id, id, entry, entry.getCron());
         } catch (Exception e) {
+            LOG.error("注册轮询任务失败:{},表达式为:{}", id, entry.getCron(), e);
             // TODO: 2020/3/5
             e.printStackTrace();
         }
@@ -55,6 +62,7 @@ public class PollerEntryHolder extends AbstractPollerEntryHolder {
 
     @Override
     public void unloadEntry(String id, Poller entry) {
+        LOG.info("注销轮询任务:{}", id);
         try {
             unRegister(id);
         } catch (Exception e) {
@@ -96,10 +104,8 @@ public class PollerEntryHolder extends AbstractPollerEntryHolder {
         }
     }
 
+    // TODO: 2020/3/8 能不能通过spring的bean注册来完成这些初始化
     private JobDetail getJobDetail(String jobId, String jobName, Poller poller, HashMap<String, Object> jobDataMap) {
-        jobDataMap.put("jobId", jobId);
-        jobDataMap.put("jobName", jobName);
-        jobDataMap.put("jobBean", poller);
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
         jobDetailFactoryBean.setName(jobId);
         jobDetailFactoryBean.setJobClass(PollerWrapper.class);

@@ -144,7 +144,7 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
         if (service == null) {
 //            throw new ServiceLoadException()
         }
-
+        // TODO: 2020/3/8 重试有必要做吗，感觉是高级组件里面的东西
         List<FlowElement> nextFlowElements = service.getFlow().getNextFlowElements(componentId, message);
     }
 

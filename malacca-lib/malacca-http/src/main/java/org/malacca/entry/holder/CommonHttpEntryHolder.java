@@ -142,9 +142,8 @@ public class CommonHttpEntryHolder extends AbstractEntryHolder<Entry> implements
         if (payload == null) {
             payload = "";
         }
-        if (payload instanceof String) {
-            outputStream.write(((String) payload).getBytes());
-        } else if (payload instanceof JSONObject) {
+
+        if (payload instanceof JSONObject) {
             outputStream.write(JSONObject.toJSONString(payload).getBytes());
         } else {
             outputStream.write(payload.toString().getBytes());

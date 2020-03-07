@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * </p>
  */
 @Component
-public class JobFactory extends AdaptableJobFactory {
+public class PollerFactory extends AdaptableJobFactory {
 
     @Autowired
     private AutowireCapableBeanFactory capableBeanFactory;

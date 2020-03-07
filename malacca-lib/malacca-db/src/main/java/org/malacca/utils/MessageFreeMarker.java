@@ -13,13 +13,9 @@ import java.util.Map;
 
 public class MessageFreeMarker extends FreeMarker {
 
-    private Logger LOG = LoggerFactory.getLogger(getClass());
-
     private Message message;
 
     private boolean payloadToXml;
-
-    private Map templateMap;
 
     public MessageFreeMarker() {
     }
@@ -52,11 +48,6 @@ public class MessageFreeMarker extends FreeMarker {
                 CloseableUtils.close(byteArrayInputStream);
             }
         }
-    }
-
-    public MessageFreeMarker(Map templateMap) {
-        this.templateMap = templateMap;
-        messageMap.putAll(templateMap);
     }
 
     public Message getMessage() {

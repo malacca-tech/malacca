@@ -35,8 +35,6 @@ public class PollerWrapper extends QuartzJobBean implements InterruptableJob {
     protected void executeInternal(JobExecutionContext context) {
         String jobId = context.getJobDetail().getJobDataMap().getString("jobId");
         String jobName = context.getJobDetail().getJobDataMap().getString("jobName");
-        HashMap<String, Object> values = new HashMap<>();
-        values.put("jobId", jobId);
         //防止任务重新启动
         if (running) {
             return;
