@@ -131,6 +131,7 @@ public class CommonHttpEntryHolder extends AbstractEntryHolder<Entry> implements
         outputStream.close();
     }
 
+    // TODO: 2020/3/11 params null
     private Message<?> buildMessage(Map<String, Object> params, Object body, CommonHttpEntry entry) {
         //todo 根据语法判断消息体 默认是 http传过来的消息体
         Message message = MessageBuilder.withPayload(body).copyContext(params).build();

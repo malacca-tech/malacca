@@ -29,7 +29,6 @@ import java.net.URL;
  * Department :
  * </p>
  */
-@Component
 public class FileServiceProvider extends AbstractServiceProvider implements InitializingBean {
 
     public static final Logger LOG = LoggerFactory.getLogger(FileServiceProvider.class);
@@ -39,6 +38,9 @@ public class FileServiceProvider extends AbstractServiceProvider implements Init
 
     public FileServiceProvider(SpringServiceManager springServiceManager) {
         this.setServiceManager(springServiceManager);
+    }
+
+    public FileServiceProvider() {
     }
 
     @Override

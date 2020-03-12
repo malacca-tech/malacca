@@ -5,6 +5,8 @@ import org.malacca.entry.register.SpringEntryRegister;
 import org.malacca.event.entity.system.ServiceLoadFailedEvent;
 import org.malacca.executor.DefaultFlowExecutor;
 import org.malacca.flow.FlowElement;
+import org.malacca.parser.CommonHttpEntryParser;
+import org.malacca.parser.CommonHttpOutComponentParser;
 import org.malacca.parser.SqlEntryParser;
 import org.malacca.parser.SqlOutComponentParser;
 import org.springframework.beans.factory.DisposableBean;
@@ -166,6 +168,8 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
             ClassNameParserFactory classNameParserFactory = new ClassNameParserFactory();
             classNameParserFactory.setTypeAlia("poller", SqlEntryParser.class.getName(), "entry");
             classNameParserFactory.setTypeAlia("poller", SqlOutComponentParser.class.getName(), "component");
+            classNameParserFactory.setTypeAlia("http", CommonHttpEntryParser.class.getName(), "entry");
+            classNameParserFactory.setTypeAlia("http", CommonHttpOutComponentParser.class.getName(), "component");
             parserFactory = classNameParserFactory;
         }
 

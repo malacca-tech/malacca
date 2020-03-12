@@ -1,7 +1,9 @@
 package org.malacca.entry.register;
 
 import org.malacca.entry.Entry;
+import org.malacca.entry.holder.CommonHttpEntryHolder;
 import org.malacca.entry.holder.EntryHolder;
+import org.malacca.entry.holder.HttpEntryHolder;
 import org.malacca.entry.holder.PollerEntryHolder;
 import org.malacca.exception.ServiceLoadException;
 import org.malacca.exception.constant.SystemExceptionCode;
@@ -71,5 +73,6 @@ public class SpringEntryRegister extends AbstractEntryRegister implements Initia
     public void afterPropertiesSet() throws Exception {
         // TODO: 2020/3/4 初始化holder
         putHolder("pollerEntry", pollerEntryHolder);
+        putHolder("httpEntry", new CommonHttpEntryHolder());
     }
 }
