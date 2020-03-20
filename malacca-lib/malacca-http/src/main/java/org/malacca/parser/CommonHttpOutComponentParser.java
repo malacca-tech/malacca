@@ -28,11 +28,11 @@ import java.util.Map;
 public class CommonHttpOutComponentParser implements ComponentParser {
 
     private static final String URL_KEY = "url";
-    public static final String TIMEOUT_KEY = "timeout";
-    public static final String MEDIA_TYPE_KEY = "mediaType";
-    public static final String METHOD_KEY = "method";
-    public static final String HEADERS_KEY = "headers";
-    public static final String PARAMETERS_KEY = "parameters";
+    private static final String TIMEOUT_KEY = "timeout";
+    private static final String MEDIA_TYPE_KEY = "mediaType";
+    private static final String METHOD_KEY = "method";
+    private static final String HEADERS_KEY = "headers";
+    private static final String PARAMETERS_KEY = "parameters";
 
 
     @Override

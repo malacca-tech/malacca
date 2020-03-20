@@ -57,13 +57,13 @@ components:
     status: true
     #组件内部属性
     params:
-      method: GET
-      url: https://www.baidu.com
-      timeout: 10000
-      headers:
-        ss: ss
-        yy: yy
-      parameters:
+     method: GET
+        url: https://www.baidu.com
+        timeout: 10000
+        headers:
+          ss: ss
+          yy: yy
+        parameters:
       mediaType: application/json
     #组件环境变量 key-value 键值对
     env:

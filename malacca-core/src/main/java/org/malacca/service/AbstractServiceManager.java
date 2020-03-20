@@ -84,15 +84,6 @@ public abstract class AbstractServiceManager implements ServiceManager {
                 10, TimeUnit.SECONDS,
                 new LinkedBlockingQueue<>(10000));
     }
-
-    /**
-     * 提供重新发布功能
-     * serviceId 服务id
-     * componentId 组件id 用于定位从什么位置开始进行重推操作
-     * message 请求消息
-     */
-    abstract void retryFrom(String serviceId, String componentId, Message message);
-
     /**
      * 1.创建service实例
      * 2.

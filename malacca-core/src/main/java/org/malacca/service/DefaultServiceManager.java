@@ -32,8 +32,4 @@ public class DefaultServiceManager extends AbstractServiceManager {
         super(entryRegister, parserFactory, defaultFlowBuilder);
     }
 
-    @Override
-    void retryFrom(String serviceId, String componentId, Message message) {
-
-    }
 }
