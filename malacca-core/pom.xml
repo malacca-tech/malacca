@@ -194,4 +194,15 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/75703-release-VimS2t/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/75703-snapshot-ZZ0oEV/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

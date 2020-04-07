@@ -25,7 +25,6 @@ import java.util.Map;
  * </p>
  */
 
-@Component
 public class ServiceLoadFailedEventListener implements ApplicationListener<ServiceLoadFailedEvent> {
 
     // TODO: 2020/3/4 初始化

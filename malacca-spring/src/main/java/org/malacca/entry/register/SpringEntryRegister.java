@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  * Department :
  * </p>
  */
-@Component
+//@Component
 public class SpringEntryRegister extends AbstractEntryRegister implements InitializingBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(SpringEntryRegister.class);

@@ -66,7 +66,7 @@ public class DefaultFlowExecutor implements Executor {
         }
     }
 
-    private void handleAsyncMessage(FlowElement element, Message<?> message) {
+    public void handleAsyncMessage(FlowElement element, Message<?> message) {
         DefaultFlowExecutor flowExecutor = new DefaultFlowExecutor(flow, poolExecutor, componentMap);
         FlowExecutorRunner runner = new FlowExecutorRunner(flowExecutor, element.getSufComponentId(), message);
         poolExecutor.execute(runner);

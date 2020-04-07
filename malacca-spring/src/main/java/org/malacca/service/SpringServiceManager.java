@@ -55,7 +55,7 @@ import java.util.concurrent.TimeUnit;
  * Department :
  * </p>
  */
-@org.springframework.stereotype.Component
+//@org.springframework.stereotype.Component
 public class SpringServiceManager extends AbstractServiceManager implements InitializingBean, DisposableBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(SpringServiceManager.class);
