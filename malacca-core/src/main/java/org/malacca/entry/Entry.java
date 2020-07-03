@@ -39,5 +39,7 @@ public interface Entry {
 
     String getId();
 
+    String getServiceId();
+
     void setFlowExecutor(Executor executor);
 }

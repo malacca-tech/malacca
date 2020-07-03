@@ -41,7 +41,9 @@ public class MessageBuilder<T> {
     }
 
     public MessageBuilder copyContext(Map<String, Object> context) {
-        this.context.putAll(context);
+        if (context != null) {
+            this.context.putAll(context);
+        }
         return this;
     }
 

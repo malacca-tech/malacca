@@ -60,13 +60,13 @@ public class DefaultFlowBuilder implements FlowBuilder {
         }
     }
 
-    private FlowElement parseLine(String singleLine) {
+    protected FlowElement parseLine(String singleLine) {
         String[] parts = splitLine(singleLine);
         FlowElement flowElement = new FlowElement(parts[0], parseChannelExpression(parts[1]), parts[2]);
         return flowElement;
     }
 
-    private ChannelType parseChannelExpression(String channelExpression) {
+    protected ChannelType parseChannelExpression(String channelExpression) {
         DefaultChannelType channelType = new DefaultChannelType();
         Pattern p = Pattern.compile(ASY_REGEX);
         Matcher m = p.matcher(channelExpression);
@@ -87,7 +87,7 @@ public class DefaultFlowBuilder implements FlowBuilder {
         return channelType;
     }
 
-    private String[] splitLine(String line) {
+    protected String[] splitLine(String line) {
         line = line.trim();
         int firstSplitPointIndex = line.indexOf(" ");
         int lastSplitPointIndex = line.lastIndexOf(" ");
@@ -103,7 +103,7 @@ public class DefaultFlowBuilder implements FlowBuilder {
         };
     }
 
-    private void validFlowExpression(String expression, Map<String, Entry> entryMap, Map<String, Component> componentMap) throws FlowBuildException {
+    protected void validFlowExpression(String expression, Map<String, Entry> entryMap, Map<String, Component> componentMap) throws FlowBuildException {
         //todo 对flow表达式进行校验
         // 1.各个组件或者entry是否存在
     }

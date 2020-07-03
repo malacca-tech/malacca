@@ -7,11 +7,10 @@ import org.malacca.definition.ServiceDefinition;
 import org.malacca.entry.Entry;
 import org.malacca.entry.register.EntryRegister;
 import org.malacca.exception.ServiceLoadException;
-import org.malacca.executor.Executor;
 import org.malacca.executor.DefaultFlowExecutor;
+import org.malacca.executor.Executor;
 import org.malacca.flow.Flow;
 import org.malacca.flow.FlowBuilder;
-import org.malacca.messaging.Message;
 import org.malacca.support.ParserFactory;
 import org.malacca.support.parser.Parser;
 import org.malacca.utils.YmlParserUtils;
@@ -65,11 +64,6 @@ public abstract class AbstractServiceManager implements ServiceManager {
      */
     protected FlowBuilder flowBuilder;
 
-    /**
-     * 流程执行器
-     */
-    protected Executor executor;
-
     public AbstractServiceManager() {
     }
 
@@ -78,12 +72,12 @@ public abstract class AbstractServiceManager implements ServiceManager {
         this.parserFactory = parserFactory;
         this.flowBuilder = flowBuilder;
         this.serviceMap = new HashMap<>();
-        this.executor = new DefaultFlowExecutor();
         // TODO: 2020/2/27 线程池舒初始化
         threadExecutor = new ThreadPoolExecutor(5, 200,
                 10, TimeUnit.SECONDS,
                 new LinkedBlockingQueue<>(10000));
     }
+
     /**
      * 1.创建service实例
      * 2.
@@ -104,13 +98,14 @@ public abstract class AbstractServiceManager implements ServiceManager {
         // TODO: 2020/2/21 线程问题
         // TODO: 2020/2/25 这里会有很多需要对异常进捕获的地方 并且要派发加载失败的事件
         if (serviceDefinition != null) {
+            Executor flowExecutor = new DefaultFlowExecutor();
             Service service = buildServiceInstance(serviceDefinition);
             //加载入口组件
             List<EntryDefinition> entryDefinitions = serviceDefinition.getEntries();
             for (EntryDefinition entryDefinition : entryDefinitions) {
                 Parser<Entry, EntryDefinition> parser = parserFactory.getParser(entryDefinition.getType(), Entry.class);
                 Entry entry = parser.createInstance(entryDefinition);
-                entry.setFlowExecutor(executor);//执行器注入到entry
+                entry.setFlowExecutor(flowExecutor);//执行器注入到entry
                 service.addEntry(entry);
                 entryRegister.registerEntry(entry);
             }
@@ -126,7 +121,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
             //加载流程
             Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(), service.getEntryMap(), service.getComponentMap());
             service.setFlow(flow);
-            initFlowExecutor(service, flow);//flow执行器初始化
+            initFlowExecutor(flowExecutor, service, flow);//flow执行器初始化
             getServiceMap().put(service.getServiceId(), service);
         }
     }
@@ -170,7 +165,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
         return serviceMap;
     }
 
-    protected void initFlowExecutor(Service service, Flow flow) {
+    protected void initFlowExecutor(Executor executor, Service service, Flow flow) {
         executor.setComponentMap(service.getComponentMap());
         executor.setFlow(flow);
         executor.setPoolExecutor(threadExecutor);
@@ -203,9 +198,5 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     public void setFlowBuilder(FlowBuilder flowBuilder) {
         this.flowBuilder = flowBuilder;
-    }
-
-    public Executor getExecutor() {
-        return executor;
     }
 }

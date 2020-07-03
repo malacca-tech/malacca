@@ -24,11 +24,8 @@ import java.util.Map;
  * Department :
  * </p>
  */
-
 public class ServiceLoadFailedEventListener implements ApplicationListener<ServiceLoadFailedEvent> {
 
-    // TODO: 2020/3/4 初始化
-    @Autowired
     private EntryRegister entryRegister;
 
     @Override
@@ -38,5 +35,13 @@ public class ServiceLoadFailedEventListener implements ApplicationListener<Servi
         for (Map.Entry<String, Entry> entry : entryMap.entrySet()) {
             entryRegister.deregisterEntry(entry.getValue());
         }
+    }
+
+    public EntryRegister getEntryRegister() {
+        return entryRegister;
+    }
+
+    public void setEntryRegister(EntryRegister entryRegister) {
+        this.entryRegister = entryRegister;
     }
 }

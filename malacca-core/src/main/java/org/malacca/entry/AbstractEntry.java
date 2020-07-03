@@ -26,6 +26,8 @@ public abstract class AbstractEntry implements Entry {
 
     protected Executor flowExecutor;
 
+    private String serviceId;
+
     protected AbstractEntry(String id, String name) {
         this.id = id;
         this.name = name;
@@ -79,5 +81,18 @@ public abstract class AbstractEntry implements Entry {
 
     public void setFlowExecutor(Executor flowExecutor) {
         this.flowExecutor = flowExecutor;
+    }
+
+    public void setEntryKey(String entryKey) {
+        this.entryKey = entryKey;
+    }
+
+    @Override
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }
