@@ -47,7 +47,8 @@ public abstract class AbstractServiceManager implements ServiceManager {
     /**
      * 服务缓存
      */
-    protected Map<String, Service> serviceMap;
+    protected Map<String, Service> serviceMap = new HashMap<>(16);
+    ;
 
     /**
      * 线程池
@@ -63,6 +64,12 @@ public abstract class AbstractServiceManager implements ServiceManager {
      * 加载flow的builder
      */
     protected FlowBuilder flowBuilder;
+
+    /**
+     * 执行器缓存
+     */
+    protected Map<String, Executor> executorMap = new HashMap<>(16);
+    ;
 
     public AbstractServiceManager() {
     }
@@ -122,6 +129,7 @@ public abstract class AbstractServiceManager implements ServiceManager {
             Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(), service.getEntryMap(), service.getComponentMap());
             service.setFlow(flow);
             initFlowExecutor(flowExecutor, service, flow);//flow执行器初始化
+            getExecutorMap().put(service.getServiceId(), flowExecutor);
             getServiceMap().put(service.getServiceId(), service);
         }
     }
@@ -159,9 +167,6 @@ public abstract class AbstractServiceManager implements ServiceManager {
     }
 
     public Map<String, Service> getServiceMap() {
-        if (this.serviceMap == null) {
-            this.serviceMap = new HashMap<>(16);
-        }
         return serviceMap;
     }
 
@@ -198,5 +203,9 @@ public abstract class AbstractServiceManager implements ServiceManager {
 
     public void setFlowBuilder(FlowBuilder flowBuilder) {
         this.flowBuilder = flowBuilder;
+    }
+
+    public Map<String, Executor> getExecutorMap() {
+        return executorMap;
     }
 }

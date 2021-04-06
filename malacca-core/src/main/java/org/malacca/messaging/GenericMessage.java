@@ -1,7 +1,6 @@
 package org.malacca.messaging;
 
 
-
 import cn.hutool.core.lang.Assert;
 
 import java.io.Serializable;
@@ -11,20 +10,31 @@ public class GenericMessage<T> implements Message<T>, Serializable {
     private static final long serialVersionUID = 4268801052358035098L;
     private final T payload;
     private final Map<String, Object> context;
+    private final MessageContext messageContext;
 
     public GenericMessage(T payload) {
         this(payload, null);
     }
 
     public GenericMessage(T payload, Map<String, Object> context) {
+        this(payload, context, new MessageContext());
+    }
+
+    public GenericMessage(T payload, Map<String, Object> context, MessageContext messageContext) {
         Assert.notNull(payload, "Payload must not be null");
         Assert.notNull(context, "MessageHeaders must not be null");
         this.payload = payload;
         this.context = context;
+        this.messageContext = messageContext;
     }
 
     public T getPayload() {
         return this.payload;
+    }
+
+    @Override
+    public MessageContext getMessageContext() {
+        return this.messageContext;
     }
 
     @Override

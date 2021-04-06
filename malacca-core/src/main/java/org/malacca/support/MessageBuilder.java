@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSONObject;
 import org.malacca.messaging.GenericMessage;
 import org.malacca.messaging.Message;
+import org.malacca.messaging.MessageContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class MessageBuilder<T> {
 
     private final Message<T> originalMessage;
 
+    private MessageContext messageContext = new MessageContext();
+
     private MessageBuilder(T payload, Message<T> originalMessage) {
         Assert.notNull(payload, "payload must not be null");
         this.payload = payload;
@@ -43,6 +46,13 @@ public class MessageBuilder<T> {
     public MessageBuilder copyContext(Map<String, Object> context) {
         if (context != null) {
             this.context.putAll(context);
+        }
+        return this;
+    }
+
+    public MessageBuilder setMessageContext(MessageContext messageContext) {
+        if (messageContext != null) {
+            this.messageContext = messageContext;
         }
         return this;
     }
@@ -86,6 +96,6 @@ public class MessageBuilder<T> {
     }
 
     public Message<T> build() {
-        return (Message) new GenericMessage(this.payload, context);
+        return (Message) new GenericMessage(this.payload, context, messageContext);
     }
 }
