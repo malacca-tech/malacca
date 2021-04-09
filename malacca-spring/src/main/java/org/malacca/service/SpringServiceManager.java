@@ -12,6 +12,7 @@ import org.malacca.exception.FlowBuildException;
 import org.malacca.exception.ServiceLoadException;
 import org.malacca.exception.constant.SystemExceptionCode;
 import org.malacca.executor.DefaultFlowExecutor;
+import org.malacca.executor.Executor;
 import org.malacca.flow.DefaultFlowBuilder;
 import org.malacca.flow.Flow;
 import org.malacca.flow.FlowBuilder;
@@ -79,6 +80,7 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
         }
 
         // TODO: 2020/2/21 线程问题
+        Executor executor = new DefaultFlowExecutor();
         if (serviceDefinition != null) {
             Service service;
             try {
@@ -120,7 +122,7 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
                 try {
                     Flow flow = flowBuilder.buildFlow(serviceDefinition.getFlow(), service.getEntryMap(), service.getComponentMap());
                     service.setFlow(flow);
-                    initFlowExecutor(service, flow);//flow执行器初始化
+                    initFlowExecutor(executor, service, flow);//flow执行器初始化
                 } catch (FlowBuildException e) {
                     context.publishEvent(new ServiceLoadFailedEvent(context, service));
                     throw new ServiceLoadException(SystemExceptionCode.MALACCA_100003_FLOW_ERROR, "service:" + service.getServiceId() + "解析flow流程异常", e);
@@ -161,10 +163,6 @@ public class SpringServiceManager extends AbstractServiceManager implements Init
 
         if (flowBuilder == null) {
             flowBuilder = new DefaultFlowBuilder();
-        }
-
-        if (executor == null) {
-            executor = new DefaultFlowExecutor();
         }
 
         if (serviceMap == null) {

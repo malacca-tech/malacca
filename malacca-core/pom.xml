@@ -197,11 +197,11 @@
     <distributionManagement>
         <repository>
             <id>rdc-releases</id>
-            <url>https://repo.rdc.aliyun.com/repository/75703-release-VimS2t/</url>
+            <url>https://packages.aliyun.com/maven/repository/2007082-release-hrSlUa/</url>
         </repository>
         <snapshotRepository>
             <id>rdc-snapshots</id>
-            <url>https://repo.rdc.aliyun.com/repository/75703-snapshot-ZZ0oEV/</url>
+            <url>https://packages.aliyun.com/maven/repository/2007082-snapshot-a3AxYb/</url>
         </snapshotRepository>
     </distributionManagement>
 
