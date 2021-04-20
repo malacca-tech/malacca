@@ -26,7 +26,7 @@ public class ComponentDefinition {
     /**
      * 判断此组件是否启用
      */
-    private boolean status;
+    private boolean status = true;
 
     /**
      * 组件内部使用的环境变量
