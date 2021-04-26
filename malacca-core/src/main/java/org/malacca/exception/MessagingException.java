@@ -3,43 +3,97 @@ package org.malacca.exception;
 import org.malacca.messaging.Message;
 
 public class MessagingException extends RuntimeException {
-    private final Message<?> failedMessage;
+    /**
+     * 异常编码
+     */
+    private String code;
 
-    public MessagingException(Message<?> message) {
-        super((String) null, (Throwable) null);
-        this.failedMessage = message;
+    /**
+     * 异常描述
+     */
+    private String tips;
+
+    /**
+     * 异常
+     */
+    private Exception e;
+
+    /**
+     * 异常message
+     */
+    private Message<?> failedMessage;
+
+    public MessagingException(String code, String tips, Exception e, Message<?> failedMessage) {
+        this.code = code;
+        this.tips = tips;
+        this.e = e;
+        this.failedMessage = failedMessage;
     }
 
-    public MessagingException(String description) {
-        super(description);
-        this.failedMessage = null;
+    public MessagingException(String code, String tips, Exception e) {
+        this.code = code;
+        this.tips = tips;
+        this.e = e;
     }
 
-    public MessagingException( String description, Throwable cause) {
-        super(description, cause);
-        this.failedMessage = null;
+    public MessagingException(String tips, Exception e) {
+        this.tips = tips;
+        this.e = e;
     }
 
-    public MessagingException(Message<?> message, String description) {
-        super(description);
-        this.failedMessage = message;
+    public MessagingException(Exception e) {
+        this.e = e;
     }
 
-    public MessagingException(Message<?> message, Throwable cause) {
-        super((String) null, cause);
-        this.failedMessage = message;
+    public MessagingException(String tips) {
+        this.tips = tips;
     }
 
-    public MessagingException(Message<?> message,  String description,  Throwable cause) {
-        super(description, cause);
-        this.failedMessage = message;
+    public MessagingException(Exception e, Message<?> failedMessage) {
+        this.e = e;
+        this.failedMessage = failedMessage;
+    }
+
+    public MessagingException(String tips, Exception e, Message<?> failedMessage) {
+        this.tips = tips;
+        this.e = e;
+        this.failedMessage = failedMessage;
+    }
+
+    public MessagingException(String code, String tips) {
+        this.code = code;
+        this.tips = tips;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public Exception getE() {
+        return e;
+    }
+
+    public void setE(Exception e) {
+        this.e = e;
     }
 
     public Message<?> getFailedMessage() {
-        return this.failedMessage;
+        return failedMessage;
     }
 
-    public String toString() {
-        return super.toString() + (this.failedMessage == null ? "" : ", failedMessage=" + this.failedMessage);
+    public void setFailedMessage(Message<?> failedMessage) {
+        this.failedMessage = failedMessage;
     }
 }
