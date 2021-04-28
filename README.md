@@ -1,13 +1,34 @@
 # malacca-ce
 
-#### 介绍
-community edition
+***
+
+Malacca-ce...
+
+- 新一代声明式ESB
+- 企业内部复杂流程集成
+- 流式业务建模
+- 简单易用
+- 快
+
+### 使用Maven添加到项目
+***
+```text
+    <dependency>
+        <groupId>org.malacca</groupId>
+        <artifactId>malacca-starter</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+```
+
+### 相关技术
+***
+- jdk8
+- maven
+- spring boot
 
 #### 软件架构
-软件架构说明
 
-
-#### 安装教程
+#### 快速开始
 
 1.  xxxx
 2.  xxxx
