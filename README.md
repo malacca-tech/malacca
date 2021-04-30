@@ -36,9 +36,25 @@ Malacca-ce...
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. malacca-core
+
+   - malacca-core是malacca项目最基础组件库
+   - 定义malacca项目中最基本的entry、component、parser、parserFactory、event、message、service、flowBuilder接口及默认实现，定义服务流程中的基本异常类，定义服务配置解析类
+   - Maven引用
+
+   ```xml
+   		<dependency>
+           <groupId>org.malacca</groupId>
+           <artifactId>malacca-core</artifactId>
+           <version>1.0-SNAPSHOT</version>
+       </dependency>
+   ```
+
+   
+
+2. xxxx
+
+3. xxxx
 
 #### 参与贡献
 
