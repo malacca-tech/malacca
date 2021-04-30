@@ -43,11 +43,11 @@ Malacca-ce...
    - Maven引用
 
    ```xml
-   		<dependency>
-           <groupId>org.malacca</groupId>
-           <artifactId>malacca-core</artifactId>
-           <version>1.0-SNAPSHOT</version>
-       </dependency>
+   	<dependency>
+       <groupId>org.malacca</groupId>
+       <artifactId>malacca-core</artifactId>
+       <version>1.0-SNAPSHOT</version>
+     </dependency>
    ```
 
    
