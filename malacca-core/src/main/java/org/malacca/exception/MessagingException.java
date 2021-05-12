@@ -24,6 +24,7 @@ public class MessagingException extends RuntimeException {
     private Message<?> failedMessage;
 
     public MessagingException(String code, String tips, Exception e, Message<?> failedMessage) {
+        super(tips, e);
         this.code = code;
         this.tips = tips;
         this.e = e;
@@ -31,36 +32,43 @@ public class MessagingException extends RuntimeException {
     }
 
     public MessagingException(String code, String tips, Exception e) {
+        super(tips, e);
         this.code = code;
         this.tips = tips;
         this.e = e;
     }
 
     public MessagingException(String tips, Exception e) {
+        super(tips, e);
         this.tips = tips;
         this.e = e;
     }
 
     public MessagingException(Exception e) {
+        super((String) null, e);
         this.e = e;
     }
 
     public MessagingException(String tips) {
+        super(tips, (Exception) null);
         this.tips = tips;
     }
 
     public MessagingException(Exception e, Message<?> failedMessage) {
+        super((String) null, e);
         this.e = e;
         this.failedMessage = failedMessage;
     }
 
     public MessagingException(String tips, Exception e, Message<?> failedMessage) {
+        super(tips, e);
         this.tips = tips;
         this.e = e;
         this.failedMessage = failedMessage;
     }
 
     public MessagingException(String code, String tips) {
+        super(tips, (Exception) null);
         this.code = code;
         this.tips = tips;
     }
