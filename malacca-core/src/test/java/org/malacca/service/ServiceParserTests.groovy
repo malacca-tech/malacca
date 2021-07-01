@@ -39,7 +39,9 @@ class ServiceParserTests extends Specification {
         def entryMap = service.getEntryMap()
         def entry = entryMap.get(entryId)
         def flow = (DefaultFlow) service.getFlow()
-        def elements = flow.getNextFlowElements(flowComponentId, MessageBuilder.withPayload("0").build())
+        def message = MessageBuilder.withPayload("0").setContext("serviceId", serviceId).build();
+        def elements = flow.getNextFlowElements(flowComponentId, message)
+        println(message.toString())
 
         expect: "判断服务解析结果"
         assert componentMap.size() == componentMapSize
