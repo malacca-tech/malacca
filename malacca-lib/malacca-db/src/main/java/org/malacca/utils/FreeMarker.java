@@ -16,16 +16,14 @@ public class FreeMarker {
 
     protected Map<String, Object> messageMap = new HashMap<>();
 
-    public String parseExpression(String config) {
+    public String parseExpression(String config) throws Exception {
         StringReader stringReader = null;
         Writer writer = null;
-        String isMatch = "0";
         try {
             stringReader = new StringReader(config);
             writer = new StringWriter();
             Template template = new Template(null, stringReader, null);
             template.process(messageMap, writer);
-            isMatch = "1";
             return writer.toString();
         } catch (IOException e) {
             throw new Exception("FreeMarker输入输出异常:" + e.getMessage()
@@ -38,7 +36,6 @@ public class FreeMarker {
         } finally {
             CloseableUtils.close(writer);
             CloseableUtils.close(stringReader);
-            return "1".equals(isMatch) ? writer.toString() : "false";
         }
     }
 
