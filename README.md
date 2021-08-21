@@ -1,74 +1,75 @@
-# malacca-ce
+![height 160px](./logo.png)
 
-***
+# Intro  
+**[Malacca](https://www.malacca.tech/)** is a cloud native declarative enterprise service bus.
 
-Malacca-ce...
+### Why Cloud Native ESB
+ 
+> In this era of cloud computing, the technology stack of the Internet industry is at the forefront.Cloud native,container,service mesh,micro service are widely adopted.  
+> But industry software is still in the progress of gradual transformation.
+> So does the kernel (ESB) under SOA architecture lose its meaning of existence?  
+> Of course,In the Internet industry with a very high degree of overall self-research and the formation of platform and microservices,
+> ESB is no usage.
+> However, it can be seen that the future 2B and industry software will still face non self-developed heterogeneous system integration, protocol conversion and other scenarios.
+> This is why Malacca.  
+> Malacca can integrate the advantages of ESB in SOA Architecture (unified service entry, heterogeneous system integration, protocol transformation and routing)，
+> but also uses the latest cloud native technology. Container based can be easily deployed on kubernetes for large-scale ops.
+> At last, the simple and declarative service configuration can let your service easy to write and manage.  
+> Because of this, you can also manage your service by git ops to improve the convenience of management.
 
-- 新一代声明式ESB
-- 企业内部复杂流程集成
-- 流式业务建模
-- 简单易用
-- 快
+# Advantage  
+ * Cloud Native  
+   * Support various bonuses brought by cloud computing such as large-scale operation and maintenance and flexible expansion.  
+   * Simple installation and deployment based on kubernetes.
+   * Stepping on the present, facing the future, can support the enterprise's architecture evolution for at least ten years in the future.
+ 
+ * Declarative service configuration
+   * Simpler and clearer than traditional xml configuration and pure web configuration.
+   * Support Git Ops.
+   * Service As Code.Administrators can view the integrated services under the enterprise at a glance.
+ 
+ * High scalability  
+   * Based on java development, some traditional service codes can be simply converted to malacca plug-ins.
+   * The official provides a wealth of integrated plug-ins, which is convenient for you to quickly get started and configure the services required by various scenarios.    
 
-### 使用Maven添加到项目
-***
-```text
-    <dependency>
-        <groupId>org.malacca</groupId>
-        <artifactId>malacca-starter</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-```
+# Latest Release  
+### kernel jar  
+```xml
+<dependency>
+   <groupId>org.malacca</groupId>
+   <artifactId>malacca-core</artifactId>
+   <version>1.0-SNAPSHOT</version>
+</dependency>
+```    
 
-### 相关技术
-***
-- jdk8
-- maven
-- spring boot
+### Integration With Spring  
+```xml
+<dependency>
+   <groupId>org.malacca</groupId>
+   <artifactId>malacca-spring</artifactId>
+   <version>1.0-SNAPSHOT</version>
+</dependency>
+```    
 
-#### 软件架构
+```xml
+<dependency>
+   <groupId>org.malacca</groupId>
+   <artifactId>malacca-boot-starter</artifactId>
+   <version>1.0-SNAPSHOT</version>
+</dependency>
+```    
 
-#### 快速开始
+### helm chart  
+ - todo 
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1. malacca-core
-
-   - malacca-core是malacca项目最基础组件库
-   - 定义malacca项目中最基本的entry、component、parser、parserFactory、event、message、service、flowBuilder接口及默认实现，定义服务流程中的基本异常类，定义服务配置解析类
-   - Maven引用
-
-   ```xml
-   	<dependency>
-       <groupId>org.malacca</groupId>
-       <artifactId>malacca-core</artifactId>
-       <version>1.0-SNAPSHOT</version>
-     </dependency>
-   ```
-
-   
-
-2. xxxx
-
-3. xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+# Examples    
+## Example Repo  
+ * Request by http and save to database.    
+ * Polling read from database and write to file.   
+ * Polling read from database and transfer data by groovy script.    
+ * Read from file and transfer by javascript.    
 
 
-#### 码云特技
+# Licencing  
+Malacca ESB is under MulanPubL - 2.0 License.You can freely copy and use the source code. When you modify or distribute the source code, please obey the MulanPubL - 2.0 license.
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
