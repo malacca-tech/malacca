@@ -37,4 +37,4 @@ jobs:
       uses: Madrapps/jacoco-report@v1.1
       with:
         path: ./target/site/jacoco/jacoco.xml
-  
+        token: ${{ secrets.GITHUB_TOKEN }}
