@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-
+    name: build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +28,7 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package verify --file pom.xml
     - name: Surefire Report
       uses: ScaCap/action-surefire-report@v1.0.5
       with:
