@@ -16,9 +16,6 @@ package org.malacca.utils;
  */
 public class CloseableUtils {
 
-    private CloseableUtils() {
-    }
-
     public static void close(AutoCloseable s) {
         if (s != null) {
             try {

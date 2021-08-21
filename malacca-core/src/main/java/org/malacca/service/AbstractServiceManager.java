@@ -48,7 +48,6 @@ public abstract class AbstractServiceManager implements ServiceManager {
      * 服务缓存
      */
     protected Map<String, Service> serviceMap = new HashMap<>(16);
-    ;
 
     /**
      * 线程池
@@ -69,7 +68,6 @@ public abstract class AbstractServiceManager implements ServiceManager {
      * 执行器缓存
      */
     protected Map<String, Executor> executorMap = new HashMap<>(16);
-    ;
 
     public AbstractServiceManager() {
     }

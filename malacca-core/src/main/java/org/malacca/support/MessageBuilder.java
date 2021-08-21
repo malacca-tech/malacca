@@ -96,6 +96,6 @@ public class MessageBuilder<T> {
     }
 
     public Message<T> build() {
-        return (Message) new GenericMessage(this.payload, context, messageContext);
+        return new GenericMessage(this.payload, context, messageContext);
     }
 }
