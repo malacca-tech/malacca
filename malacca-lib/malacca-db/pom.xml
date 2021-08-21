@@ -39,17 +39,14 @@
             <artifactId>spring-jdbc</artifactId>
             <version>5.0.5.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.malacca</groupId>
+            <artifactId>malacca-core</artifactId>
+        </dependency>
     </dependencies>
-
-    <distributionManagement>
-        <repository>
-            <id>rdc-releases</id>
-            <url>https://packages.aliyun.com/maven/repository/2007082-release-hrSlUa/</url>
-        </repository>
-        <snapshotRepository>
-            <id>rdc-snapshots</id>
-            <url>https://packages.aliyun.com/maven/repository/2007082-snapshot-a3AxYb/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>
