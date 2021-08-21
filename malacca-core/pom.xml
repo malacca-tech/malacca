@@ -78,11 +78,11 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.7.1</version>
+                <version>1.12.1</version>
                 <configuration>
                     <testSources>
                         <testSource>
-                            <directory>src/test/java</directory>
+                            <directory>${project.basedir}/src/test/groovy</directory>
                             <includes>
                                 <includ>**/*.groovy</includ>
                             </includes>
@@ -92,9 +92,14 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>
-                                compileTests
-                            </goal>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>compileTests</goal>
+                            <goal>removeStubs</goal>
+                            <goal>removeTestStubs</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -103,11 +108,13 @@
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M4</version>
+                <version>3.0.0-M5</version>
                 <configuration>
+                    <useModulePath>false</useModulePath>
                     <useFile>false</useFile>
                     <includes>
-                        <include>**/*Tests.java</include>
+                        <include>**/*Tests</include>
+                        <include>**/*Spec</include>
                     </includes>
                 </configuration>
             </plugin>
