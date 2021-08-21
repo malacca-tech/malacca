@@ -1,6 +1,5 @@
 package org.malacca.event;
 
-
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +31,13 @@ public abstract class AbstractEventListener implements MalaccaEventListener, Run
     private static final Integer BACH_SIZE = 10000;
 
     public AbstractEventListener(String queueName) {
-        queue = new LinkedBlockingQueue<>(400000);
+        queue = new LinkedBlockingQueue(400000);
         thread = new Thread(this);
         this.queueName = queueName;
         thread.setName("malacca_" + queueName);
         thread.start();
     }
 
-    @Override
     public void run() {
         while (true) {
             try {
@@ -69,7 +67,7 @@ public abstract class AbstractEventListener implements MalaccaEventListener, Run
     }
 
     private void processQueue() throws InterruptedException {
-        List<Event> eventList = new ArrayList<>();
+        List<Event> eventList = new ArrayList();
         int size = queue == null ? 0 : queue.size();
         int batchSize = size;
         if (size >= BACH_SIZE) {
@@ -91,7 +89,6 @@ public abstract class AbstractEventListener implements MalaccaEventListener, Run
         queue.clear();
     }
 
-    @Override
     public void onEvent(Event event) {
         queue.add(event);
         if (!this.thread.isAlive()) {

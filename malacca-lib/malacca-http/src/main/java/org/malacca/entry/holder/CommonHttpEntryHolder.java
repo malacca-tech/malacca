@@ -46,7 +46,7 @@ public class CommonHttpEntryHolder extends AbstractEntryHolder<Entry> implements
 
     // TODO: 2020/3/2 初始化有待考证
     //port -(id,HttpServer)
-    private Map<Integer, Map<String, HttpServer>> httpServerMap = new HashMap<>();
+    private Map<Integer, Map<String, HttpServer>> httpServerMap = new HashMap();
 
     public static final String GET_METHOD = "GET";
 
