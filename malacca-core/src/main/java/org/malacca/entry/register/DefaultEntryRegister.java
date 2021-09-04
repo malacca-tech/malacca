@@ -1,8 +1,5 @@
 package org.malacca.entry.register;
 
-import org.malacca.entry.Entry;
-import org.malacca.entry.holder.HttpEntryHolder;
-
 /**
  * <p>
  * Title :
@@ -26,7 +23,7 @@ public class DefaultEntryRegister extends AbstractEntryRegister {
 
     // TODO: 2020/2/25 在初始化的时候就一应该初始化holder
     protected void initHolder() {
-        super.putHolder("httpEntry", new HttpEntryHolder());
+//        super.putHolder("httpEntry", new HttpEntryHolder());
     }
 
 }
