@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import org.malacca.component.CommonHttpOutComponent;
 import org.malacca.component.Component;
-import org.malacca.component.output.HttpOutComponent;
 import org.malacca.definition.ComponentDefinition;
 import org.malacca.support.parser.ComponentParser;
 
